@@ -1,0 +1,21 @@
+{
+  "characterId": "dorn",
+  "characterName": "도른",
+  "state": "EMOTE",
+  "clipId": "fixture_dorn_surprised",
+  "duration": 0.5,
+  "fps": 8,
+  "totalFrames": 4,
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "columns": 4,
+  "rows": 1,
+  "sheetWidth": 256,
+  "sheetHeight": 64,
+  "background": "transparent",
+  "zoom": 1,
+  "offsetX": 0,
+  "offsetY": 0,
+  "exportDate": "2026-08-18T00:00:00.000Z",
+  "_fixture": true
+}

@@ -1,0 +1,44 @@
+{
+  "id": "kyle",
+  "schemaVersion": 3,
+  "name": "카일",
+  "version": "1.0.0",
+  "license": "cc-by",
+  "persona": {
+    "occupation": "경비병",
+    "mbti": "ISTJ",
+    "age": null,
+    "gender": "",
+    "personality": [
+      "원칙적",
+      "초조함을 숨긴다"
+    ],
+    "traits": [
+      "원칙적",
+      "초조함을 숨긴다"
+    ],
+    "speechStyle": "군인처럼 짧고 딱딱한 하오체. 변명은 길어진다",
+    "background": "동문 초소를 3년째 지켰다. 어젯밤 잠깐 자리를 비웠다"
+  },
+  "profiles": {
+    "village": {
+      "role": "경비병",
+      "mood": "calm",
+      "schedule": []
+    }
+  },
+  "animation": {
+    "idle": "fixture_kyle_idle",
+    "walk": "fixture_kyle_walk",
+    "rest": "fixture_kyle_rest",
+    "sleep": "",
+    "emotes": {
+      "happy": "",
+      "greet": "fixture_kyle_greet",
+      "surprised": "fixture_kyle_surprised",
+      "thinking": "fixture_kyle_thinking",
+      "proud": "fixture_kyle_proud"
+    }
+  },
+  "_fixture": true
+}

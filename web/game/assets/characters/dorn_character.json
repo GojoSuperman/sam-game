@@ -1,0 +1,44 @@
+{
+  "id": "dorn",
+  "schemaVersion": 3,
+  "name": "도른",
+  "version": "1.0.0",
+  "license": "cc-by",
+  "persona": {
+    "occupation": "떠돌이 상인",
+    "mbti": "ENTP",
+    "age": null,
+    "gender": "",
+    "personality": [
+      "말이 많다",
+      "거짓이 자연스럽다"
+    ],
+    "traits": [
+      "말이 많다",
+      "거짓이 자연스럽다"
+    ],
+    "speechStyle": "능글맞은 반말. 질문을 질문으로 되돌린다",
+    "background": "두 달에 한 번 성을 지난다. 금지된 물건을 나른 적이 있다"
+  },
+  "profiles": {
+    "village": {
+      "role": "떠돌이 상인",
+      "mood": "calm",
+      "schedule": []
+    }
+  },
+  "animation": {
+    "idle": "fixture_dorn_idle",
+    "walk": "fixture_dorn_walk",
+    "rest": "fixture_dorn_rest",
+    "sleep": "",
+    "emotes": {
+      "happy": "",
+      "greet": "fixture_dorn_greet",
+      "surprised": "fixture_dorn_surprised",
+      "thinking": "fixture_dorn_thinking",
+      "proud": "fixture_dorn_proud"
+    }
+  },
+  "_fixture": true
+}

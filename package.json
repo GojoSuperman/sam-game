@@ -1,0 +1,23 @@
+{
+  "name": "sam-game",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SPUM 월드 + SAM API 게임 셋업 — 프록시, bakedData 생성기, 연결 검증",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "game": "node --env-file-if-exists=.env --env-file-if-exists=.env.local server/sam-proxy.mjs",
+    "test": "node scripts/test-case.mjs 2000 && node scripts/test-facts.mjs && node scripts/test-world.mjs 200 && node scripts/test-render.mjs && node scripts/test-playthrough.mjs 500 && node scripts/check-tiers.mjs && node scripts/check-assets.mjs",
+    "doctor": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/doctor.mjs",
+    "verify": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/verify-sam.mjs",
+    "verify-keys": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/verify-keys.mjs",
+    "proxy": "node --env-file-if-exists=.env --env-file-if-exists=.env.local server/sam-proxy.mjs",
+    "bake": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/bake-world.mjs",
+    "models": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/list-models.mjs",
+    "check-tiers": "node scripts/check-tiers.mjs",
+    "check-assets": "node scripts/check-assets.mjs",
+    "fixtures": "node scripts/make-fixture-assets.mjs"
+  }
+}

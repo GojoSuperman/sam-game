@@ -1,0 +1,19 @@
+{
+  "cast": [
+    "kyle",
+    "mira",
+    "dorn",
+    "howell",
+    "ben"
+  ],
+  "sheets": [
+    "idle",
+    "walk",
+    "rest",
+    "thinking",
+    "surprised",
+    "proud",
+    "greet"
+  ],
+  "_fixture": true
+}

@@ -1,0 +1,44 @@
+{
+  "id": "howell",
+  "schemaVersion": 3,
+  "name": "하웰",
+  "version": "1.0.0",
+  "license": "cc-by",
+  "persona": {
+    "occupation": "요리사",
+    "mbti": "ESFP",
+    "age": null,
+    "gender": "",
+    "personality": [
+      "소문을 옮긴다",
+      "약점을 잡히면 흔들린다"
+    ],
+    "traits": [
+      "소문을 옮긴다",
+      "약점을 잡히면 흔들린다"
+    ],
+    "speechStyle": "투박한 반말. 남 얘기를 잘 옮긴다",
+    "background": "부엌을 관리한다. 곳간에서 없어진 것을 알고 있다"
+  },
+  "profiles": {
+    "village": {
+      "role": "요리사",
+      "mood": "calm",
+      "schedule": []
+    }
+  },
+  "animation": {
+    "idle": "fixture_howell_idle",
+    "walk": "fixture_howell_walk",
+    "rest": "fixture_howell_rest",
+    "sleep": "",
+    "emotes": {
+      "happy": "",
+      "greet": "fixture_howell_greet",
+      "surprised": "fixture_howell_surprised",
+      "thinking": "fixture_howell_thinking",
+      "proud": "fixture_howell_proud"
+    }
+  },
+  "_fixture": true
+}

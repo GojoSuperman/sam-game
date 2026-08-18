@@ -1,0 +1,32 @@
+# --- 시크릿: 절대 커밋 금지 ---
+# .env* 로 통째로 막고 예시 파일만 되살린다.
+# 개별 패턴만 쓰면 .env.local.bak.1787045377 같은 파생 파일이 새어 나간다
+# (실제로 그런 백업 파일이 만들어져 커밋 직전에 잡혔다).
+.env*
+!.env.example
+.mcp.json
+.claude/settings.local.json
+.claude/.credentials.json
+*.pem
+*.key
+id_rsa*
+*.p12
+*.pfx
+
+# --- 의존성 / 빌드 ---
+node_modules/
+dist/
+.cache/
+
+# --- 생성물 (SAM 호출 결과는 비용이 든 산출물이므로 out/ 은 보관하되 커밋 안 함) ---
+out/
+*.log
+
+# --- OS / 에디터 ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# 검토용 로컬 뷰어
+.review/

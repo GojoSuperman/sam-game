@@ -1,0 +1,44 @@
+{
+  "id": "mira",
+  "schemaVersion": 3,
+  "name": "미라",
+  "version": "1.0.0",
+  "license": "cc-by",
+  "persona": {
+    "occupation": "시녀",
+    "mbti": "INFP",
+    "age": null,
+    "gender": "",
+    "personality": [
+      "겁이 많다",
+      "다독이면 열린다"
+    ],
+    "traits": [
+      "겁이 많다",
+      "다독이면 열린다"
+    ],
+    "speechStyle": "조심스러운 존댓말. 말끝을 흐린다",
+    "background": "성주 부인을 모신다. 밤마다 누군가를 몰래 만났다"
+  },
+  "profiles": {
+    "village": {
+      "role": "시녀",
+      "mood": "calm",
+      "schedule": []
+    }
+  },
+  "animation": {
+    "idle": "fixture_mira_idle",
+    "walk": "fixture_mira_walk",
+    "rest": "fixture_mira_rest",
+    "sleep": "",
+    "emotes": {
+      "happy": "",
+      "greet": "fixture_mira_greet",
+      "surprised": "fixture_mira_surprised",
+      "thinking": "fixture_mira_thinking",
+      "proud": "fixture_mira_proud"
+    }
+  },
+  "_fixture": true
+}

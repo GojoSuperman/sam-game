@@ -1,0 +1,21 @@
+{
+  "characterId": "dorn",
+  "characterName": "도른",
+  "state": "WALK",
+  "clipId": "fixture_dorn_walk",
+  "duration": 0.75,
+  "fps": 8,
+  "totalFrames": 6,
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "columns": 6,
+  "rows": 1,
+  "sheetWidth": 384,
+  "sheetHeight": 64,
+  "background": "transparent",
+  "zoom": 1,
+  "offsetX": 0,
+  "offsetY": 0,
+  "exportDate": "2026-08-18T00:00:00.000Z",
+  "_fixture": true
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>서고의 밤 — SPUM + SAM</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- 배경: 타일맵. 화면 전체를 채우고 나머지는 그 위에 얹는다 -->
+<canvas id="stage" width="768" height="512"></canvas>
+
+<!-- 상단 오버레이 -->
+<div class="ov ov-top">
+  <span class="title">서고의 밤</span>
+  <span id="clock" class="chip">낮 10시</span>
+  <span id="beats" class="chip">심문 18회</span>
+  <span id="samState" class="chip chip--wait">SAM 확인 중</span>
+  <span id="assetState" class="chip">자산 확인 중</span>
+  <button id="togglePanel" class="ghost" type="button" title="우측 패널 접기">▤</button>
+</div>
+
+<!-- 하단 좌: 대화창 -->
+<div class="ov ov-chat">
+  <div id="who" class="who"></div>
+  <div id="log" class="log" aria-live="polite"></div>
+  <form id="askForm" class="ask">
+    <input id="ask" type="text" autocomplete="off" placeholder="어젯밤 어디 있었소?" />
+    <button type="submit">묻기</button>
+  </form>
+  <div id="hints" class="hints"></div>
+</div>
+
+<!-- 우측: 증언판 · 낮 피드 · 지목 -->
+<div class="ov ov-side" id="side">
+  <section>
+    <h2>증언판</h2>
+    <div id="board"></div>
+    <div class="legend"><span>● 본인</span><span>○ 목격</span><span class="conflict">붉은 칸 = 두 장소</span></div>
+  </section>
+  <section>
+    <h2>낮 피드</h2>
+    <div id="feed" class="feed"></div>
+  </section>
+  <section>
+    <h2>지목</h2>
+    <div class="accuse">
+      <select id="accSpy"></select>
+      <select id="accHour"></select>
+      <select id="accWit"></select>
+      <button id="accuseBtn" type="button">지목한다</button>
+    </div>
+    <div id="result" class="result"></div>
+  </section>
+  <details class="diag"><summary>진단</summary><div id="diag"></div></details>
+</div>
+<script type="module" src="./main.mjs"></script>
+</body>
+</html>

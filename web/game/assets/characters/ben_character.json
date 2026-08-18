@@ -1,0 +1,44 @@
+{
+  "id": "ben",
+  "schemaVersion": 3,
+  "name": "벤",
+  "version": "1.0.0",
+  "license": "cc-by",
+  "persona": {
+    "occupation": "마부",
+    "mbti": "ISTP",
+    "age": null,
+    "gender": "",
+    "personality": [
+      "무뚝뚝",
+      "다그치면 닫힌다"
+    ],
+    "traits": [
+      "무뚝뚝",
+      "다그치면 닫힌다"
+    ],
+    "speechStyle": "말수가 적다. 묻는 것만 답한다",
+    "background": "뒷마당 마구간에서 지낸다. 밤에 말이 울었다"
+  },
+  "profiles": {
+    "village": {
+      "role": "마부",
+      "mood": "calm",
+      "schedule": []
+    }
+  },
+  "animation": {
+    "idle": "fixture_ben_idle",
+    "walk": "fixture_ben_walk",
+    "rest": "fixture_ben_rest",
+    "sleep": "",
+    "emotes": {
+      "happy": "",
+      "greet": "fixture_ben_greet",
+      "surprised": "fixture_ben_surprised",
+      "thinking": "fixture_ben_thinking",
+      "proud": "fixture_ben_proud"
+    }
+  },
+  "_fixture": true
+}

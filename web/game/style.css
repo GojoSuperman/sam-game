@@ -1,0 +1,134 @@
+/* 배경은 캔버스가 화면 전체를 덮고, UI 는 그 위에 반투명 오버레이로 얹는다. */
+:root{
+  color-scheme: dark;
+  --fg:#e8ebee; --mut:#9aa4b0; --dim:#6c7683;
+  --acc:#8cc0f0; --warn:#e8c07f; --bad:#e8907f; --good:#93d69e;
+  --glass: rgba(12,16,22,.72);
+  --glassline: rgba(150,170,195,.16);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; overflow:hidden; background:#07090c; color:var(--fg);
+  font:14px/1.55 -apple-system,"Segoe UI","Noto Sans KR",sans-serif;
+}
+
+/* ── 배경 캔버스 ── */
+#stage{
+  position:fixed; inset:0; margin:auto;
+  image-rendering:pixelated;
+  z-index:0;
+}
+
+/* ── 오버레이 공통 ── */
+.ov{
+  position:fixed; z-index:2;
+  background:var(--glass);
+  border:1px solid var(--glassline);
+  border-radius:10px;
+  backdrop-filter:blur(9px) saturate(1.1);
+  -webkit-backdrop-filter:blur(9px) saturate(1.1);
+  box-shadow:0 8px 28px rgba(0,0,0,.45);
+}
+
+/* 상단 바 */
+.ov-top{
+  top:10px; left:10px; right:10px;
+  display:flex; align-items:center; gap:8px;
+  padding:7px 12px; border-radius:999px;
+}
+.ov-top .title{font-weight:700; letter-spacing:.02em; margin-right:4px}
+.chip{
+  font-size:11px; color:var(--mut);
+  padding:2px 9px; border:1px solid var(--glassline); border-radius:999px;
+  white-space:nowrap;
+}
+.chip--ok{color:var(--good); border-color:rgba(147,214,158,.3)}
+.chip--bad{color:var(--bad); border-color:rgba(232,144,127,.3)}
+.chip--wait{color:var(--warn); border-color:rgba(232,192,127,.3)}
+.ghost{
+  margin-left:auto; background:none; border:1px solid var(--glassline);
+  color:var(--mut); border-radius:7px; padding:2px 9px; cursor:pointer; font:inherit;
+}
+.ghost:hover{color:var(--fg)}
+
+/* 대화창 — 하단 좌 */
+.ov-chat{
+  left:10px; bottom:10px; width:min(560px, calc(100vw - 20px));
+  padding:10px 12px 12px;
+  display:flex; flex-direction:column; gap:8px;
+}
+body.panel-off .ov-chat{width:min(720px, calc(100vw - 20px))}
+.who{font-size:12.5px; color:var(--mut); min-height:20px}
+.who b{color:var(--acc)}
+.who .room{color:var(--warn)}
+.who .act{color:var(--fg)}
+.log{
+  height:170px; overflow-y:auto; padding-right:4px;
+  font-size:13px; scrollbar-width:thin;
+}
+.log p{margin:0 0 6px}
+.log .you{color:var(--acc)}
+.log .sys{color:var(--dim); font-size:12px}
+.log .src{color:var(--dim); font-size:10.5px; margin-left:6px}
+.ask{display:flex; gap:7px}
+.ask input{
+  flex:1; background:rgba(255,255,255,.05); border:1px solid var(--glassline);
+  border-radius:7px; padding:9px 11px; color:var(--fg); font:inherit;
+}
+.ask input:focus{outline:none; border-color:var(--acc); background:rgba(255,255,255,.08)}
+.ask button{
+  background:var(--acc); color:#08101a; border:0; border-radius:7px;
+  padding:9px 16px; font:inherit; font-weight:700; cursor:pointer;
+}
+.ask button:disabled{opacity:.45; cursor:default}
+.hints{display:flex; gap:6px; flex-wrap:wrap; font-size:11.5px; color:var(--dim)}
+.hints button{
+  background:rgba(255,255,255,.04); border:1px solid var(--glassline); color:var(--mut);
+  border-radius:6px; padding:3px 8px; font:inherit; font-size:11.5px; cursor:pointer;
+}
+.hints button:hover{color:var(--fg)}
+
+/* 우측 패널 */
+.ov-side{
+  right:10px; top:58px; bottom:10px; width:296px;
+  padding:12px; overflow-y:auto;
+  display:flex; flex-direction:column; gap:16px;
+  transition:transform .18s ease, opacity .18s ease;
+}
+body.panel-off .ov-side{transform:translateX(320px); opacity:0; pointer-events:none}
+h2{
+  font-size:10.5px; color:var(--dim); text-transform:uppercase;
+  letter-spacing:.1em; margin:0 0 7px; font-weight:600;
+}
+table{border-collapse:collapse; width:100%; font-size:11px}
+th,td{border:1px solid var(--glassline); padding:2px 3px; text-align:center; height:24px}
+th{color:var(--dim); font-weight:500; font-size:10px}
+th:first-child{text-align:left; white-space:nowrap}
+td.has{color:var(--fg)}
+td.conflict{background:rgba(190,70,55,.32); color:#ffbbae}
+td.empty{color:#454d58}
+.legend{display:flex; gap:8px; flex-wrap:wrap; font-size:10.5px; color:var(--dim); margin-top:6px}
+.legend .conflict{color:#ffbbae}
+.feed{max-height:132px; overflow-y:auto; font-size:11px}
+.feed div{padding:2px 0; color:var(--mut); border-bottom:1px solid rgba(150,170,195,.09)}
+.feed div:last-child{border:0}
+.feed .h{color:var(--warn); margin-right:5px}
+.feed .n{color:var(--fg)}
+.accuse{display:grid; gap:5px}
+.accuse select,.accuse button{
+  background:rgba(255,255,255,.05); color:var(--fg); border:1px solid var(--glassline);
+  border-radius:7px; padding:7px; font:inherit; font-size:12.5px;
+}
+.accuse button{background:rgba(160,110,50,.28); border-color:rgba(200,150,80,.35); cursor:pointer; font-weight:700}
+.result{margin-top:9px; font-size:12px}
+.result.win{color:var(--good)} .result.lose{color:var(--bad)}
+.result div{margin-bottom:3px}
+.diag{margin-top:auto; font-size:11px; color:var(--dim)}
+.diag summary{cursor:pointer}
+#diag{padding-top:6px; white-space:pre-wrap; font-family:ui-monospace,monospace; font-size:10px}
+
+@media(max-width:820px){
+  .ov-side{display:none}
+  .ov-chat{width:calc(100vw - 20px)}
+}
