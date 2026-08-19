@@ -1,0 +1,34 @@
+{
+  "floor": [
+    "stone_floor",
+    "stone_floor:1",
+    "stone_floor:2"
+  ],
+  "wall": [
+    "wall_20_13",
+    "wall_21_13"
+  ],
+  "door": [
+    "pave",
+    "pave:1"
+  ],
+  "plant": [
+    "cypress",
+    "plant",
+    "tree"
+  ],
+  "water": [
+    "water",
+    "water:1"
+  ],
+  "outside": [
+    "grass",
+    "grass:1",
+    "grass:2"
+  ],
+  "prop": [
+    "table_c",
+    "chair",
+    "dresser"
+  ]
+}

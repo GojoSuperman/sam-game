@@ -1,0 +1,16 @@
+{
+  "key": "med-ai-floors",
+  "grid": 16,
+  "size": 1024,
+  "style": "top-down 2d pixel-art material swatch chart for a mediterranean stone villa interior",
+  "regions": [
+    { "name": "트래버틴 석재 바닥", "rect": [0, 0, 8, 8], "color": "#E6DCC4",
+      "prompt": "warm cream travertine stone floor" },
+    { "name": "따뜻한 목재 바닥", "rect": [8, 0, 8, 8], "color": "#A97B4E",
+      "prompt": "warm mid-brown wooden plank floor with straight grain" },
+    { "name": "테라코타 바닥", "rect": [0, 8, 8, 8], "color": "#BC6640",
+      "prompt": "terracotta clay tile floor" },
+    { "name": "짙은 청회 석재", "rect": [8, 8, 8, 8], "color": "#8A8F8C",
+      "prompt": "cool grey-green limestone slab" }
+  ]
+}

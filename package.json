@@ -9,15 +9,27 @@
   },
   "scripts": {
     "game": "node --env-file-if-exists=.env --env-file-if-exists=.env.local server/sam-proxy.mjs",
-    "test": "node scripts/test-case.mjs 2000 && node scripts/test-facts.mjs && node scripts/test-world.mjs 200 && node scripts/test-render.mjs && node scripts/test-playthrough.mjs 500 && node scripts/check-tiers.mjs && node scripts/check-assets.mjs",
+    "test": "node scripts/test-case.mjs 2000 && node scripts/test-facts.mjs && node scripts/test-world.mjs 200 && node scripts/test-render.mjs && node scripts/test-playthrough.mjs 500 && node scripts/check-tiers.mjs && node scripts/check-assets.mjs && node scripts/test-map.mjs",
     "doctor": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/doctor.mjs",
     "verify": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/verify-sam.mjs",
     "verify-keys": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/verify-keys.mjs",
     "proxy": "node --env-file-if-exists=.env --env-file-if-exists=.env.local server/sam-proxy.mjs",
     "bake": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/bake-world.mjs",
+    "map": "node scripts/make-map.mjs",
+    "tiles": "node scripts/tile-picker.mjs",
+    "tileset": "node scripts/make-tileset.mjs",
+    "assets": "node scripts/fetch-assets.mjs",
+    "import-tileset": "node scripts/import-tileset.mjs",
+    "ai-source": "node scripts/make-ai-source.mjs",
+    "asset-snippet": "node scripts/asset-snippet.mjs",
+    "theme-from-backup": "node scripts/theme-from-backup.mjs",
+    "fetch-theme": "node scripts/fetch-theme.mjs",
     "models": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/list-models.mjs",
     "check-tiers": "node scripts/check-tiers.mjs",
     "check-assets": "node scripts/check-assets.mjs",
     "fixtures": "node scripts/make-fixture-assets.mjs"
+  },
+  "dependencies": {
+    "jpeg-js": "^0.4.4"
   }
 }

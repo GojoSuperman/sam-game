@@ -1,0 +1,983 @@
+{
+  "key": "med",
+  "name": "지중해 석조 빌라",
+  "assetId": "theme_med_villa",
+  "source": "out/assets/kenney-roguelike-rpg/Spritesheet/roguelikeSheet_transparent.png",
+  "sourcePack": "Kenney Roguelike RPG Pack",
+  "license": "CC0 (퍼블릭 도메인) — 출처 표기 의무 없음, 상업 이용 자유",
+  "srcTileSize": 16,
+  "srcMargin": 1,
+  "outTileSize": 32,
+  "columns": 16,
+  "tileIdBase": 2049,
+  "tiles": [
+    {
+      "alias": "stone_floor",
+      "at": [
+        6,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "석재 바닥(베이지)"
+    },
+    {
+      "alias": "stone_floor",
+      "at": [
+        7,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "석재 바닥 b"
+    },
+    {
+      "alias": "stone_floor",
+      "at": [
+        6,
+        28
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "석재 바닥 c"
+    },
+    {
+      "alias": "wood_floor",
+      "at": [
+        0,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "목재 바닥"
+    },
+    {
+      "alias": "wood_floor",
+      "at": [
+        1,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "목재 바닥 b"
+    },
+    {
+      "alias": "wood_floor",
+      "at": [
+        0,
+        28
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "목재 바닥 c"
+    },
+    {
+      "alias": "terracotta",
+      "at": [
+        12,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "테라코타"
+    },
+    {
+      "alias": "terracotta",
+      "at": [
+        13,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "테라코타 b"
+    },
+    {
+      "alias": "tile_floor",
+      "at": [
+        11,
+        7
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "청록 타일"
+    },
+    {
+      "alias": "tile_floor",
+      "at": [
+        12,
+        7
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "청록 타일 b"
+    },
+    {
+      "alias": "pave",
+      "at": [
+        3,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "포장 석재"
+    },
+    {
+      "alias": "pave",
+      "at": [
+        4,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "포장 석재 b"
+    },
+    {
+      "alias": "grass",
+      "at": [
+        9,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "잔디"
+    },
+    {
+      "alias": "grass",
+      "at": [
+        10,
+        27
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "잔디 b"
+    },
+    {
+      "alias": "grass",
+      "at": [
+        9,
+        28
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "잔디 c"
+    },
+    {
+      "alias": "water",
+      "at": [
+        1,
+        2
+      ],
+      "category": "obstacle_slowing",
+      "movement": "slowed",
+      "name": "물"
+    },
+    {
+      "alias": "water",
+      "at": [
+        1,
+        3
+      ],
+      "category": "obstacle_slowing",
+      "movement": "slowed",
+      "name": "물 b"
+    },
+    {
+      "alias": "wall",
+      "at": [
+        14,
+        17
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "회벽(베이지)"
+    },
+    {
+      "alias": "wall",
+      "at": [
+        15,
+        17
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "회벽 b"
+    },
+    {
+      "alias": "wall_top",
+      "at": [
+        14,
+        14
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽 상단"
+    },
+    {
+      "alias": "wall_grey",
+      "at": [
+        21,
+        17
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "회색 벽"
+    },
+    {
+      "alias": "column",
+      "at": [
+        13,
+        19
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "기둥"
+    },
+    {
+      "alias": "door",
+      "at": [
+        36,
+        3
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "문"
+    },
+    {
+      "alias": "window",
+      "at": [
+        15,
+        18
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "창문"
+    },
+    {
+      "alias": "window",
+      "at": [
+        40,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "창문 b"
+    },
+    {
+      "alias": "chair",
+      "at": [
+        19,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "의자"
+    },
+    {
+      "alias": "counter",
+      "at": [
+        10,
+        4
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "조리대"
+    },
+    {
+      "alias": "counter",
+      "at": [
+        11,
+        4
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "조리대(음식)"
+    },
+    {
+      "alias": "shelf",
+      "at": [
+        10,
+        5
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "선반"
+    },
+    {
+      "alias": "cabinet",
+      "at": [
+        28,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "싱크대"
+    },
+    {
+      "alias": "wardrobe",
+      "at": [
+        28,
+        3
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "옷장"
+    },
+    {
+      "alias": "dresser",
+      "at": [
+        28,
+        5
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "서랍장"
+    },
+    {
+      "alias": "mirror",
+      "at": [
+        29,
+        3
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "거울"
+    },
+    {
+      "alias": "fireplace",
+      "at": [
+        13,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽난로"
+    },
+    {
+      "alias": "torch",
+      "at": [
+        17,
+        7
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "횃불"
+    },
+    {
+      "alias": "cypress",
+      "at": [
+        16,
+        10
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "사이프러스"
+    },
+    {
+      "alias": "tree",
+      "at": [
+        13,
+        10
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "나무"
+    },
+    {
+      "alias": "plant",
+      "at": [
+        13,
+        9
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "화분"
+    },
+    {
+      "alias": "flowerbed",
+      "at": [
+        1,
+        7
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "화단"
+    },
+    {
+      "alias": "bed_a_tl",
+      "at": [
+        14,
+        1
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대A 좌상"
+    },
+    {
+      "alias": "bed_a_tr",
+      "at": [
+        15,
+        1
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대A 우상"
+    },
+    {
+      "alias": "bed_a_bl",
+      "at": [
+        14,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대A 좌하"
+    },
+    {
+      "alias": "bed_a_br",
+      "at": [
+        15,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대A 우하"
+    },
+    {
+      "alias": "bed_b_tl",
+      "at": [
+        16,
+        1
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대B 좌상"
+    },
+    {
+      "alias": "bed_b_tr",
+      "at": [
+        17,
+        1
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대B 우상"
+    },
+    {
+      "alias": "bed_b_bl",
+      "at": [
+        16,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대B 좌하"
+    },
+    {
+      "alias": "bed_b_br",
+      "at": [
+        17,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "침대B 우하"
+    },
+    {
+      "alias": "sofa_tl",
+      "at": [
+        12,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "소파 좌상"
+    },
+    {
+      "alias": "sofa_tr",
+      "at": [
+        13,
+        2
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "소파 우상"
+    },
+    {
+      "alias": "sofa_bl",
+      "at": [
+        12,
+        3
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "소파 좌하"
+    },
+    {
+      "alias": "sofa_br",
+      "at": [
+        13,
+        3
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "소파 우하"
+    },
+    {
+      "alias": "table_l",
+      "at": [
+        16,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "식탁 좌"
+    },
+    {
+      "alias": "table_c",
+      "at": [
+        17,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "식탁 중"
+    },
+    {
+      "alias": "table_r",
+      "at": [
+        18,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "식탁 우"
+    },
+    {
+      "alias": "side_table",
+      "at": [
+        19,
+        6
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "낮은 탁자"
+    },
+    {
+      "alias": "bookshelf",
+      "at": [
+        30,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "책장(선반)"
+    },
+    {
+      "alias": "bookshelf",
+      "at": [
+        31,
+        0
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "책장(선반) b"
+    },
+    {
+      "alias": "arch",
+      "at": [
+        18,
+        17
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "아치 개구부"
+    },
+    {
+      "alias": "wall_dark",
+      "at": [
+        14,
+        13
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽(어두운)"
+    },
+    {
+      "alias": "wall_dark",
+      "at": [
+        15,
+        13
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽(어두운) b"
+    },
+    {
+      "alias": "wall_dark",
+      "at": [
+        16,
+        13
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽(어두운) c"
+    },
+    {
+      "alias": "rug_green_tl",
+      "at": [
+        10,
+        16
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green tl"
+    },
+    {
+      "alias": "rug_green_t",
+      "at": [
+        11,
+        16
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green t"
+    },
+    {
+      "alias": "rug_green_tr",
+      "at": [
+        12,
+        16
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green tr"
+    },
+    {
+      "alias": "rug_green_l",
+      "at": [
+        10,
+        17
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green l"
+    },
+    {
+      "alias": "rug_green_c",
+      "at": [
+        11,
+        17
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green c"
+    },
+    {
+      "alias": "rug_green_r",
+      "at": [
+        12,
+        17
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green r"
+    },
+    {
+      "alias": "rug_green_bl",
+      "at": [
+        10,
+        18
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green bl"
+    },
+    {
+      "alias": "rug_green_b",
+      "at": [
+        11,
+        18
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green b"
+    },
+    {
+      "alias": "rug_green_br",
+      "at": [
+        12,
+        18
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_green br"
+    },
+    {
+      "alias": "rug_orange_tl",
+      "at": [
+        10,
+        19
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange tl"
+    },
+    {
+      "alias": "rug_orange_t",
+      "at": [
+        11,
+        19
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange t"
+    },
+    {
+      "alias": "rug_orange_tr",
+      "at": [
+        12,
+        19
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange tr"
+    },
+    {
+      "alias": "rug_orange_l",
+      "at": [
+        10,
+        20
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange l"
+    },
+    {
+      "alias": "rug_orange_c",
+      "at": [
+        11,
+        20
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange c"
+    },
+    {
+      "alias": "rug_orange_r",
+      "at": [
+        12,
+        20
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange r"
+    },
+    {
+      "alias": "rug_orange_bl",
+      "at": [
+        10,
+        21
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange bl"
+    },
+    {
+      "alias": "rug_orange_b",
+      "at": [
+        11,
+        21
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange b"
+    },
+    {
+      "alias": "rug_orange_br",
+      "at": [
+        12,
+        21
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_orange br"
+    },
+    {
+      "alias": "rug_teal_tl",
+      "at": [
+        10,
+        22
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal tl"
+    },
+    {
+      "alias": "rug_teal_t",
+      "at": [
+        11,
+        22
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal t"
+    },
+    {
+      "alias": "rug_teal_tr",
+      "at": [
+        12,
+        22
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal tr"
+    },
+    {
+      "alias": "rug_teal_l",
+      "at": [
+        10,
+        23
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal l"
+    },
+    {
+      "alias": "rug_teal_c",
+      "at": [
+        11,
+        23
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal c"
+    },
+    {
+      "alias": "rug_teal_r",
+      "at": [
+        12,
+        23
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal r"
+    },
+    {
+      "alias": "rug_teal_bl",
+      "at": [
+        10,
+        24
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal bl"
+    },
+    {
+      "alias": "rug_teal_b",
+      "at": [
+        11,
+        24
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal b"
+    },
+    {
+      "alias": "rug_teal_br",
+      "at": [
+        12,
+        24
+      ],
+      "category": "decoration",
+      "movement": "passable",
+      "name": "rug_teal br"
+    },
+    {
+      "alias": "wall_face",
+      "at": [
+        13,
+        15
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽면"
+    },
+    {
+      "alias": "wall_face",
+      "at": [
+        16,
+        15
+      ],
+      "category": "obstacle_blocking",
+      "movement": "blocked",
+      "name": "벽면"
+    }
+  ],
+  "regions": [
+    {
+      "aliasPrefix": "furn",
+      "from": [
+        26,
+        0
+      ],
+      "size": [
+        16,
+        8
+      ]
+    },
+    {
+      "aliasPrefix": "room",
+      "from": [
+        10,
+        0
+      ],
+      "size": [
+        10,
+        9
+      ]
+    },
+    {
+      "aliasPrefix": "wall",
+      "from": [
+        13,
+        13
+      ],
+      "size": [
+        10,
+        9
+      ]
+    },
+    {
+      "aliasPrefix": "floor",
+      "from": [
+        0,
+        26
+      ],
+      "size": [
+        20,
+        4
+      ]
+    },
+    {
+      "aliasPrefix": "edge",
+      "from": [
+        0,
+        15
+      ],
+      "size": [
+        10,
+        11
+      ]
+    },
+    {
+      "aliasPrefix": "deco",
+      "from": [
+        42,
+        0
+      ],
+      "size": [
+        15,
+        10
+      ]
+    }
+  ]
+}

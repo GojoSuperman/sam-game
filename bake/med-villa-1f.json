@@ -1,0 +1,1418 @@
+{
+  "slug": "med-villa-1f",
+  "name": "지중해 저택 1층 — HOME 2 & 3",
+  "description": "참조 도면 HOME 2 & HOME 3 의 1층. 두 집이 중앙 벽을 공유하며 나란히 붙고, 두 거실 남쪽에 정사각 중정이 U자로 안긴다. 좌우 외곽에 TV룸·서재·게스트욕실이 세로로 쌓이고 모두 중정으로 직접 열린다. 중정 가운데 꽃 모양 분수, 좌우에 야자수 열, 남쪽에 진입 계단. 타일은 Kenney Roguelike RPG Pack (CC0). 64×44 = 2,816칸.",
+  "width": 64,
+  "height": 44,
+  "tileSize": 32,
+  "tiles": {
+    "ground": [
+      "grass",
+      "grass:1",
+      "grass:2"
+    ],
+    "floor": [
+      "stone_floor",
+      "stone_floor:1",
+      "stone_floor:2"
+    ],
+    "wall": [
+      "wall_13_13",
+      "wall_14_13",
+      "wall_15_13"
+    ],
+    "wallTop": [
+      "wall_20_13",
+      "wall_21_13"
+    ]
+  },
+  "groundWalkable": true,
+  "areas": [
+    {
+      "id": "outer-n",
+      "name": "둘레길 북",
+      "rect": [
+        2,
+        2,
+        60,
+        1
+      ],
+      "tile": "pave",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "outer-s",
+      "name": "둘레길 남",
+      "rect": [
+        2,
+        41,
+        60,
+        1
+      ],
+      "tile": "pave",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "outer-w",
+      "name": "둘레길 서",
+      "rect": [
+        2,
+        2,
+        1,
+        40
+      ],
+      "tile": "pave",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "outer-e",
+      "name": "둘레길 동",
+      "rect": [
+        61,
+        2,
+        1,
+        40
+      ],
+      "tile": "pave",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "shell",
+      "name": "외벽",
+      "rect": [
+        3,
+        3,
+        58,
+        38
+      ],
+      "floor": [
+        "pave",
+        "pave:1"
+      ],
+      "tags": [
+        "compound"
+      ],
+      "color": "#8a8a8a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 30,
+          "width": 4,
+          "floor": "pave"
+        }
+      ],
+      "spawn": false,
+      "wall": [
+        "wall_20_13",
+        "wall_21_13"
+      ],
+      "wallTop": [
+        "wall_20_15",
+        "wall_21_15"
+      ]
+    },
+    {
+      "id": "kitchen-l",
+      "name": "주방 (좌)",
+      "rect": [
+        3,
+        3,
+        14,
+        15
+      ],
+      "floor": [
+        "stone_floor",
+        "stone_floor:1",
+        "stone_floor:2"
+      ],
+      "tags": [
+        "room",
+        "kitchen"
+      ],
+      "color": "#b08a4a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 9,
+          "width": 2,
+          "floor": "door"
+        },
+        {
+          "side": "south",
+          "at": 8,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "living-l",
+      "name": "거실 (좌)",
+      "rect": [
+        16,
+        3,
+        16,
+        15
+      ],
+      "floor": [
+        "stone_floor",
+        "stone_floor:1",
+        "stone_floor:2"
+      ],
+      "tags": [
+        "room",
+        "living"
+      ],
+      "color": "#4dd08a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 22,
+          "width": 3,
+          "floor": "arch"
+        }
+      ]
+    },
+    {
+      "id": "tv-l",
+      "name": "TV룸 (좌)",
+      "rect": [
+        3,
+        17,
+        14,
+        8
+      ],
+      "floor": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "tags": [
+        "room",
+        "tv"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "east",
+          "at": 20,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "office-l",
+      "name": "서재 (좌)",
+      "rect": [
+        3,
+        24,
+        14,
+        8
+      ],
+      "floor": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "tags": [
+        "room",
+        "office"
+      ],
+      "color": "#6b4f2a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 27,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "bath-l",
+      "name": "게스트욕실 (좌)",
+      "rect": [
+        3,
+        31,
+        14,
+        10
+      ],
+      "floor": [
+        "pave",
+        "pave:1"
+      ],
+      "tags": [
+        "room",
+        "bath"
+      ],
+      "color": "#4dc0d0",
+      "doors": [
+        {
+          "side": "east",
+          "at": 34,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "kitchen-r",
+      "name": "주방 (우)",
+      "rect": [
+        47,
+        3,
+        14,
+        15
+      ],
+      "floor": [
+        "stone_floor",
+        "stone_floor:1",
+        "stone_floor:2"
+      ],
+      "tags": [
+        "room",
+        "kitchen"
+      ],
+      "color": "#b08a4a",
+      "doors": [
+        {
+          "side": "west",
+          "at": 9,
+          "width": 2,
+          "floor": "door"
+        },
+        {
+          "side": "south",
+          "at": 54,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "living-r",
+      "name": "거실 (우)",
+      "rect": [
+        32,
+        3,
+        16,
+        15
+      ],
+      "floor": [
+        "stone_floor",
+        "stone_floor:1",
+        "stone_floor:2"
+      ],
+      "tags": [
+        "room",
+        "living"
+      ],
+      "color": "#4dd08a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 39,
+          "width": 3,
+          "floor": "arch"
+        }
+      ]
+    },
+    {
+      "id": "tv-r",
+      "name": "TV룸 (우)",
+      "rect": [
+        47,
+        17,
+        14,
+        8
+      ],
+      "floor": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "tags": [
+        "room",
+        "tv"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "west",
+          "at": 20,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "office-r",
+      "name": "서재 (우)",
+      "rect": [
+        47,
+        24,
+        14,
+        8
+      ],
+      "floor": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "tags": [
+        "room",
+        "office"
+      ],
+      "color": "#6b4f2a",
+      "doors": [
+        {
+          "side": "west",
+          "at": 27,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    },
+    {
+      "id": "bath-r",
+      "name": "게스트욕실 (우)",
+      "rect": [
+        47,
+        31,
+        14,
+        10
+      ],
+      "floor": [
+        "pave",
+        "pave:1"
+      ],
+      "tags": [
+        "room",
+        "bath"
+      ],
+      "color": "#4dc0d0",
+      "doors": [
+        {
+          "side": "west",
+          "at": 34,
+          "width": 2,
+          "floor": "door"
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "courtyard",
+      "name": "중정",
+      "rect": [
+        17,
+        18,
+        30,
+        22
+      ],
+      "tile": [
+        "pave",
+        "pave:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "courtyard",
+        "outdoor"
+      ],
+      "color": "#d0c8b0"
+    },
+    {
+      "id": "stair-l",
+      "name": "계단 (좌)",
+      "rect": [
+        17,
+        19,
+        2,
+        12
+      ],
+      "tile": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "walkable": true,
+      "tags": [
+        "stair"
+      ],
+      "color": "#8a5a2b"
+    },
+    {
+      "id": "stair-r",
+      "name": "계단 (우)",
+      "rect": [
+        45,
+        19,
+        2,
+        12
+      ],
+      "tile": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "walkable": true,
+      "tags": [
+        "stair"
+      ],
+      "color": "#8a5a2b"
+    },
+    {
+      "id": "entry-step",
+      "name": "진입 계단",
+      "rect": [
+        28,
+        37,
+        8,
+        3
+      ],
+      "tile": [
+        "wood_floor",
+        "wood_floor:1",
+        "wood_floor:2"
+      ],
+      "walkable": true,
+      "tags": [
+        "stair",
+        "entry"
+      ],
+      "color": "#8a5a2b"
+    },
+    {
+      "id": "planter-l",
+      "name": "화단 (좌)",
+      "rect": [
+        21,
+        20,
+        2,
+        16
+      ],
+      "tile": [
+        "grass",
+        "grass:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "garden"
+      ],
+      "color": "#6bd08a"
+    },
+    {
+      "id": "planter-r",
+      "name": "화단 (우)",
+      "rect": [
+        41,
+        20,
+        2,
+        16
+      ],
+      "tile": [
+        "grass",
+        "grass:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "garden"
+      ],
+      "color": "#6bd08a"
+    },
+    {
+      "id": "planter-s",
+      "name": "화단 (남)",
+      "rect": [
+        24,
+        34,
+        16,
+        2
+      ],
+      "tile": [
+        "grass",
+        "grass:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "garden"
+      ],
+      "color": "#6bd08a"
+    },
+    {
+      "id": "fountain-h",
+      "name": "분수",
+      "rect": [
+        29,
+        27,
+        6,
+        2
+      ],
+      "tile": [
+        "water",
+        "water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "water",
+        "fountain"
+      ],
+      "color": "#2f9fd0"
+    },
+    {
+      "id": "fountain-v",
+      "name": "분수 (세로)",
+      "rect": [
+        31,
+        25,
+        2,
+        6
+      ],
+      "tile": [
+        "water",
+        "water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "water",
+        "fountain"
+      ],
+      "color": "#2f9fd0"
+    }
+  ],
+  "stamps": [
+    {
+      "stamp": [
+        [
+          "room_10_4",
+          "room_11_4",
+          "room_12_4"
+        ],
+        [
+          "room_10_5",
+          "room_11_5",
+          "room_12_5"
+        ]
+      ],
+      "at": [
+        [
+          7,
+          8
+        ],
+        [
+          54,
+          8
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_28_0",
+          "furn_29_0",
+          "furn_30_0",
+          "furn_31_0"
+        ]
+      ],
+      "at": [
+        [
+          6,
+          4
+        ],
+        [
+          54,
+          4
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "room_16_0",
+          "room_17_0",
+          "room_18_0"
+        ]
+      ],
+      "at": [
+        [
+          21,
+          5
+        ],
+        [
+          40,
+          5
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "room_12_2",
+          "room_13_2"
+        ],
+        [
+          "room_12_3",
+          "room_13_3"
+        ]
+      ],
+      "at": [
+        [
+          19,
+          14
+        ],
+        [
+          26,
+          14
+        ],
+        [
+          43,
+          14
+        ],
+        [
+          36,
+          14
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "room_14_1",
+          "room_15_1"
+        ],
+        [
+          "room_14_2",
+          "room_15_2"
+        ]
+      ],
+      "at": [
+        [
+          6,
+          19
+        ],
+        [
+          56,
+          19
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_28_5",
+          "furn_29_5",
+          "furn_30_5"
+        ]
+      ],
+      "at": [
+        [
+          10,
+          23
+        ],
+        [
+          51,
+          23
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_30_0",
+          "furn_31_0",
+          "furn_30_0",
+          "furn_31_0"
+        ]
+      ],
+      "at": [
+        [
+          5,
+          25
+        ],
+        [
+          55,
+          25
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "room_16_0",
+          "room_17_0",
+          "room_18_0"
+        ]
+      ],
+      "at": [
+        [
+          6,
+          30
+        ],
+        [
+          55,
+          30
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_28_3"
+        ]
+      ],
+      "at": [
+        [
+          15,
+          26
+        ],
+        [
+          48,
+          26
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_28_6",
+          "furn_29_6"
+        ]
+      ],
+      "at": [
+        [
+          5,
+          33
+        ],
+        [
+          57,
+          33
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "furn_29_3",
+          "furn_30_3"
+        ]
+      ],
+      "at": [
+        [
+          10,
+          33
+        ],
+        [
+          52,
+          33
+        ]
+      ]
+    },
+    {
+      "stamp": [
+        [
+          "room_13_0",
+          "room_14_0"
+        ]
+      ],
+      "at": [
+        [
+          23,
+          4
+        ],
+        [
+          39,
+          4
+        ]
+      ]
+    }
+  ],
+  "props": [
+    {
+      "tile": [
+        "wall_17_17",
+        "wall_18_17",
+        "wall_19_17"
+      ],
+      "at": [
+        [
+          30,
+          40
+        ],
+        [
+          31,
+          40
+        ],
+        [
+          32,
+          40
+        ],
+        [
+          33,
+          40
+        ],
+        [
+          16,
+          9
+        ],
+        [
+          16,
+          10
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          9,
+          17
+        ],
+        [
+          22,
+          17
+        ],
+        [
+          23,
+          17
+        ],
+        [
+          24,
+          17
+        ],
+        [
+          16,
+          20
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          16,
+          27
+        ],
+        [
+          16,
+          28
+        ],
+        [
+          16,
+          34
+        ],
+        [
+          16,
+          35
+        ],
+        [
+          47,
+          9
+        ],
+        [
+          47,
+          10
+        ],
+        [
+          54,
+          17
+        ],
+        [
+          55,
+          17
+        ],
+        [
+          39,
+          17
+        ],
+        [
+          40,
+          17
+        ],
+        [
+          41,
+          17
+        ],
+        [
+          47,
+          20
+        ],
+        [
+          47,
+          21
+        ],
+        [
+          47,
+          27
+        ],
+        [
+          47,
+          28
+        ],
+        [
+          47,
+          34
+        ],
+        [
+          47,
+          35
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": [
+        "room_19_2",
+        "room_19_3",
+        "room_19_5",
+        "room_19_7"
+      ],
+      "at": [
+        [
+          6,
+          11
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          57,
+          11
+        ],
+        [
+          55,
+          11
+        ],
+        [
+          53,
+          11
+        ],
+        [
+          6,
+          33
+        ],
+        [
+          9,
+          33
+        ],
+        [
+          57,
+          33
+        ],
+        [
+          54,
+          33
+        ],
+        [
+          20,
+          8
+        ],
+        [
+          25,
+          8
+        ],
+        [
+          43,
+          8
+        ],
+        [
+          38,
+          8
+        ]
+      ]
+    },
+    {
+      "tile": [
+        "room_16_7",
+        "room_17_7",
+        "room_18_7"
+      ],
+      "at": [
+        [
+          17,
+          22
+        ],
+        [
+          17,
+          32
+        ],
+        [
+          46,
+          22
+        ],
+        [
+          46,
+          32
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          27,
+          18
+        ],
+        [
+          36,
+          18
+        ],
+        [
+          44,
+          18
+        ]
+      ]
+    },
+    {
+      "tile": [
+        "wall_13_19",
+        "wall_13_20"
+      ],
+      "at": [
+        [
+          18,
+          18
+        ],
+        [
+          22,
+          18
+        ],
+        [
+          26,
+          18
+        ],
+        [
+          30,
+          18
+        ],
+        [
+          34,
+          18
+        ],
+        [
+          38,
+          18
+        ],
+        [
+          42,
+          18
+        ],
+        [
+          46,
+          18
+        ]
+      ]
+    },
+    {
+      "tile": "cypress",
+      "at": [
+        [
+          21,
+          20
+        ],
+        [
+          21,
+          23
+        ],
+        [
+          21,
+          26
+        ],
+        [
+          21,
+          29
+        ],
+        [
+          21,
+          32
+        ],
+        [
+          21,
+          35
+        ],
+        [
+          42,
+          20
+        ],
+        [
+          42,
+          23
+        ],
+        [
+          42,
+          26
+        ],
+        [
+          42,
+          29
+        ],
+        [
+          42,
+          32
+        ],
+        [
+          42,
+          35
+        ]
+      ]
+    },
+    {
+      "tile": [
+        "plant",
+        "room_15_5",
+        "room_15_6"
+      ],
+      "at": [
+        [
+          22,
+          21
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          22,
+          27
+        ],
+        [
+          22,
+          30
+        ],
+        [
+          22,
+          33
+        ],
+        [
+          41,
+          21
+        ],
+        [
+          41,
+          24
+        ],
+        [
+          41,
+          27
+        ],
+        [
+          41,
+          30
+        ],
+        [
+          41,
+          33
+        ]
+      ]
+    },
+    {
+      "tile": [
+        "deco_44_0",
+        "deco_45_0"
+      ],
+      "at": [
+        [
+          26,
+          35
+        ],
+        [
+          38,
+          35
+        ]
+      ],
+      "blocking": false
+    }
+  ],
+  "scatter": [
+    {
+      "tile": [
+        "tree",
+        "cypress"
+      ],
+      "density": 0.4,
+      "seed": 11,
+      "onTile": "grass",
+      "blocking": true,
+      "rect": [
+        0,
+        0,
+        64,
+        2
+      ]
+    },
+    {
+      "tile": [
+        "tree",
+        "cypress"
+      ],
+      "density": 0.4,
+      "seed": 12,
+      "onTile": "grass",
+      "blocking": true,
+      "rect": [
+        0,
+        42,
+        64,
+        2
+      ]
+    },
+    {
+      "tile": [
+        "tree",
+        "cypress"
+      ],
+      "density": 0.4,
+      "seed": 13,
+      "onTile": "grass",
+      "blocking": true,
+      "rect": [
+        0,
+        2,
+        2,
+        40
+      ]
+    },
+    {
+      "tile": [
+        "tree",
+        "cypress"
+      ],
+      "density": 0.4,
+      "seed": 14,
+      "onTile": "grass",
+      "blocking": true,
+      "rect": [
+        62,
+        2,
+        2,
+        40
+      ]
+    },
+    {
+      "tile": [
+        "flowerbed"
+      ],
+      "density": 0.5,
+      "seed": 41,
+      "onTile": "grass",
+      "blocking": false,
+      "layer": "back",
+      "rect": [
+        17,
+        18,
+        30,
+        22
+      ]
+    }
+  ],
+  "spawnPoints": [
+    {
+      "x": 31,
+      "y": 41,
+      "label": "대문 밖"
+    },
+    {
+      "x": 31,
+      "y": 32,
+      "label": "중정 남"
+    },
+    {
+      "x": 31,
+      "y": 21,
+      "label": "중정 북"
+    },
+    {
+      "x": 25,
+      "y": 30,
+      "label": "중정 서"
+    },
+    {
+      "x": 38,
+      "y": 30,
+      "label": "중정 동"
+    }
+  ],
+  "nineSlices": [
+    {
+      "tile": "rug_orange",
+      "rect": [
+        20,
+        9,
+        9,
+        4
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "rug_orange",
+      "rect": [
+        35,
+        9,
+        9,
+        4
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "rug_green",
+      "rect": [
+        5,
+        21,
+        6,
+        3
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "rug_green",
+      "rect": [
+        53,
+        21,
+        6,
+        3
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "rug_teal",
+      "rect": [
+        5,
+        26,
+        7,
+        4
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "rug_teal",
+      "rect": [
+        52,
+        26,
+        7,
+        4
+      ],
+      "blocking": false
+    }
+  ]
+}

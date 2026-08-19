@@ -1,0 +1,961 @@
+{
+  "slug": "castle-1f",
+  "name": "성 1층 — 도랑과 숲",
+  "description": "성 1층 평면도(침실 3 · 화장실 · 거실 · 식당 · 주방 · 서재)를 인공 도랑이 둘러싸고, 그 밖으로 숲이 펼쳐진다. 남쪽 다리 하나로만 성에 들어간다. 56×40 = 2,240칸.",
+  "width": 56,
+  "height": 40,
+  "tileSize": 32,
+  "tiles": {
+    "ground": [
+      "outdoor.grass",
+      "outdoor.grass:1",
+      "outdoor.grass:2",
+      "outdoor.grass:3",
+      "outdoor.flowers",
+      "outdoor.flowers:2"
+    ],
+    "floor": [
+      "indoor.wood_floor",
+      "indoor.wood_floor:1"
+    ],
+    "wall": "indoor.wall"
+  },
+  "groundWalkable": true,
+  "areas": [
+    {
+      "id": "bank",
+      "name": "성벽 둘레길",
+      "rect": [
+        10,
+        6,
+        36,
+        28
+      ],
+      "tile": [
+        "outdoor.dirt",
+        "outdoor.dirt:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "outdoor",
+        "path"
+      ],
+      "color": "#a98b5a"
+    },
+    {
+      "id": "moat-n",
+      "name": "도랑 북",
+      "rect": [
+        7,
+        3,
+        42,
+        3
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "moat",
+        "water"
+      ],
+      "color": "#3aa0d8"
+    },
+    {
+      "id": "moat-s",
+      "name": "도랑 남",
+      "rect": [
+        7,
+        34,
+        42,
+        3
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "moat",
+        "water"
+      ],
+      "color": "#3aa0d8"
+    },
+    {
+      "id": "moat-w",
+      "name": "도랑 서",
+      "rect": [
+        7,
+        6,
+        3,
+        28
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "moat",
+        "water"
+      ],
+      "color": "#3aa0d8"
+    },
+    {
+      "id": "moat-e",
+      "name": "도랑 동",
+      "rect": [
+        46,
+        6,
+        3,
+        28
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "moat",
+        "water"
+      ],
+      "color": "#3aa0d8"
+    },
+    {
+      "id": "bridge",
+      "name": "다리",
+      "rect": [
+        26,
+        34,
+        4,
+        3
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "outdoor",
+        "bridge"
+      ],
+      "color": "#c9c9c9"
+    },
+    {
+      "id": "trail",
+      "name": "숲길",
+      "rect": [
+        26,
+        37,
+        4,
+        3
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "outdoor",
+        "path"
+      ],
+      "color": "#c9c9c9"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "castle-wall",
+      "name": "성벽",
+      "rect": [
+        11,
+        7,
+        34,
+        26
+      ],
+      "wall": "outdoor.stone_wall",
+      "floor": [
+        "outdoor.dirt",
+        "outdoor.dirt:1"
+      ],
+      "tags": [
+        "castle",
+        "wall"
+      ],
+      "color": "#9a9a9a",
+      "spawn": false,
+      "doors": [
+        {
+          "side": "south",
+          "at": 26,
+          "width": 2,
+          "floor": "outdoor.stone_floor"
+        }
+      ]
+    },
+    {
+      "id": "bed-1",
+      "name": "침실 1",
+      "rect": [
+        12,
+        8,
+        10,
+        12
+      ],
+      "tags": [
+        "room",
+        "bedroom"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "east",
+          "at": 13,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 16,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "bed-2",
+      "name": "침실 2",
+      "rect": [
+        21,
+        8,
+        10,
+        12
+      ],
+      "tags": [
+        "room",
+        "bedroom"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "east",
+          "at": 13,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 25,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "bed-3",
+      "name": "침실 3",
+      "rect": [
+        30,
+        8,
+        9,
+        12
+      ],
+      "tags": [
+        "room",
+        "bedroom"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "east",
+          "at": 13,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 34,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "bath",
+      "name": "화장실",
+      "rect": [
+        38,
+        8,
+        6,
+        12
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "bath"
+      ],
+      "color": "#63b3ff",
+      "doors": [
+        {
+          "side": "south",
+          "at": 40,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "study",
+      "name": "서재",
+      "rect": [
+        12,
+        19,
+        11,
+        13
+      ],
+      "tags": [
+        "room",
+        "study"
+      ],
+      "color": "#6b4f2a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 24,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "living",
+      "name": "거실",
+      "rect": [
+        22,
+        19,
+        11,
+        13
+      ],
+      "tags": [
+        "room",
+        "living",
+        "hub"
+      ],
+      "color": "#4dd08a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 24,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 26,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "dining",
+      "name": "식당",
+      "rect": [
+        32,
+        19,
+        7,
+        13
+      ],
+      "tags": [
+        "room",
+        "dining"
+      ],
+      "color": "#d08a4d",
+      "doors": [
+        {
+          "side": "east",
+          "at": 24,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "주방",
+      "rect": [
+        38,
+        19,
+        6,
+        13
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "kitchen"
+      ],
+      "color": "#c9a227"
+    }
+  ],
+  "props": [
+    {
+      "tile": "indoor.bed",
+      "at": [
+        [
+          14,
+          10
+        ],
+        [
+          16,
+          10
+        ],
+        [
+          23,
+          10
+        ],
+        [
+          25,
+          10
+        ],
+        [
+          32,
+          10
+        ],
+        [
+          34,
+          10
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          19,
+          17
+        ],
+        [
+          28,
+          17
+        ],
+        [
+          36,
+          17
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          20,
+          9
+        ],
+        [
+          29,
+          9
+        ],
+        [
+          37,
+          9
+        ],
+        [
+          13,
+          30
+        ],
+        [
+          42,
+          20
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bathtub",
+      "at": [
+        [
+          39,
+          10
+        ],
+        [
+          40,
+          10
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          41,
+          16
+        ],
+        [
+          42,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          39,
+          20
+        ],
+        [
+          40,
+          20
+        ],
+        [
+          41,
+          20
+        ],
+        [
+          42,
+          20
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          34,
+          23
+        ],
+        [
+          35,
+          23
+        ],
+        [
+          34,
+          24
+        ],
+        [
+          35,
+          24
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          33,
+          23
+        ],
+        [
+          36,
+          24
+        ],
+        [
+          34,
+          22
+        ],
+        [
+          35,
+          25
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.sofa",
+      "at": [
+        [
+          25,
+          22
+        ],
+        [
+          26,
+          22
+        ],
+        [
+          27,
+          22
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          25,
+          24
+        ],
+        [
+          26,
+          24
+        ],
+        [
+          27,
+          24
+        ],
+        [
+          25,
+          25
+        ],
+        [
+          26,
+          25
+        ],
+        [
+          27,
+          25
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          24,
+          29
+        ],
+        [
+          25,
+          29
+        ],
+        [
+          26,
+          29
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          13,
+          20
+        ],
+        [
+          14,
+          20
+        ],
+        [
+          15,
+          20
+        ],
+        [
+          16,
+          20
+        ],
+        [
+          20,
+          20
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          13,
+          30
+        ],
+        [
+          14,
+          30
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          17,
+          25
+        ],
+        [
+          18,
+          25
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          17,
+          27
+        ],
+        [
+          18,
+          27
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          19,
+          10
+        ],
+        [
+          19,
+          11
+        ],
+        [
+          28,
+          10
+        ],
+        [
+          28,
+          11
+        ],
+        [
+          37,
+          10
+        ],
+        [
+          37,
+          11
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          14,
+          16
+        ],
+        [
+          23,
+          16
+        ],
+        [
+          32,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          15,
+          13
+        ],
+        [
+          16,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          16,
+          14
+        ],
+        [
+          24,
+          13
+        ],
+        [
+          25,
+          13
+        ],
+        [
+          24,
+          14
+        ],
+        [
+          25,
+          14
+        ],
+        [
+          33,
+          13
+        ],
+        [
+          34,
+          13
+        ],
+        [
+          33,
+          14
+        ],
+        [
+          34,
+          14
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          17,
+          20
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          19,
+          20
+        ],
+        [
+          13,
+          24
+        ],
+        [
+          13,
+          25
+        ],
+        [
+          13,
+          26
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.sofa",
+      "at": [
+        [
+          29,
+          26
+        ],
+        [
+          30,
+          26
+        ],
+        [
+          31,
+          26
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          24,
+          27
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          28,
+          22
+        ],
+        [
+          30,
+          22
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          39,
+          25
+        ],
+        [
+          40,
+          25
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          34,
+          27
+        ],
+        [
+          35,
+          27
+        ],
+        [
+          36,
+          27
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          21,
+          18
+        ],
+        [
+          30,
+          18
+        ],
+        [
+          38,
+          18
+        ],
+        [
+          22,
+          30
+        ],
+        [
+          31,
+          30
+        ],
+        [
+          41,
+          30
+        ]
+      ]
+    }
+  ],
+  "scatter": [
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.26,
+      "seed": 7,
+      "onTile": "outdoor.grass",
+      "blocking": true
+    },
+    {
+      "tile": [
+        "outdoor.flowers",
+        "outdoor.flowers:1",
+        "outdoor.flowers:3",
+        "outdoor.bush"
+      ],
+      "density": 0.16,
+      "seed": 21,
+      "onTile": "outdoor.grass",
+      "blocking": false,
+      "layer": "back"
+    }
+  ],
+  "spawnPoints": [
+    {
+      "x": 28,
+      "y": 38,
+      "label": "숲길 입구"
+    },
+    {
+      "x": 28,
+      "y": 35,
+      "label": "다리"
+    },
+    {
+      "x": 26,
+      "y": 33,
+      "label": "성문 앞"
+    },
+    {
+      "x": 10,
+      "y": 19,
+      "label": "성벽 서쪽 둘레길"
+    },
+    {
+      "x": 45,
+      "y": 19,
+      "label": "성벽 동쪽 둘레길"
+    }
+  ]
+}

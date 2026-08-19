@@ -1,0 +1,1859 @@
+{
+  "slug": "courtyard-house",
+  "name": "중정 저택 1층",
+  "description": "가운데 못이 있는 중정을 방들이 둘러싸는 평면. 중정 바깥으로 두 칸 폭 회랑이 돌고 거기서 모든 방으로 들어간다. 집 밖은 나무 정원이고, 건물을 한 칸 폭 둘레길이 감싼다. 48×60 = 2,880칸.",
+  "width": 48,
+  "height": 60,
+  "tileSize": 32,
+  "tiles": {
+    "ground": [
+      "outdoor.grass",
+      "outdoor.grass:1",
+      "outdoor.grass:2",
+      "outdoor.grass:3",
+      "outdoor.flowers",
+      "outdoor.flowers:2"
+    ],
+    "floor": [
+      "indoor.wood_floor",
+      "indoor.wood_floor:1"
+    ],
+    "wall": "indoor.wall"
+  },
+  "groundWalkable": true,
+  "areas": [
+    {
+      "id": "engawa-n",
+      "name": "회랑 북",
+      "rect": [
+        16,
+        22,
+        16,
+        2
+      ],
+      "tile": [
+        "indoor.wood_floor",
+        "indoor.wood_floor:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "corridor"
+      ],
+      "color": "#c98f4d"
+    },
+    {
+      "id": "engawa-s",
+      "name": "회랑 남",
+      "rect": [
+        16,
+        36,
+        16,
+        2
+      ],
+      "tile": [
+        "indoor.wood_floor",
+        "indoor.wood_floor:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "corridor"
+      ],
+      "color": "#c98f4d"
+    },
+    {
+      "id": "engawa-w",
+      "name": "회랑 서",
+      "rect": [
+        16,
+        24,
+        2,
+        12
+      ],
+      "tile": [
+        "indoor.wood_floor",
+        "indoor.wood_floor:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "corridor"
+      ],
+      "color": "#c98f4d"
+    },
+    {
+      "id": "engawa-e",
+      "name": "회랑 동",
+      "rect": [
+        30,
+        24,
+        2,
+        12
+      ],
+      "tile": [
+        "indoor.wood_floor",
+        "indoor.wood_floor:1"
+      ],
+      "walkable": true,
+      "tags": [
+        "corridor"
+      ],
+      "color": "#c98f4d"
+    },
+    {
+      "id": "courtyard",
+      "name": "중정",
+      "rect": [
+        18,
+        24,
+        12,
+        12
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "courtyard",
+        "outdoor"
+      ],
+      "color": "#8ac4d0"
+    },
+    {
+      "id": "perimeter-n",
+      "name": "둘레길 북",
+      "rect": [
+        4,
+        4,
+        42,
+        1
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "perimeter-s",
+      "name": "둘레길 남",
+      "rect": [
+        4,
+        57,
+        42,
+        1
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "perimeter-w",
+      "name": "둘레길 서",
+      "rect": [
+        4,
+        4,
+        1,
+        54
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    },
+    {
+      "id": "perimeter-e",
+      "name": "둘레길 동",
+      "rect": [
+        45,
+        4,
+        1,
+        54
+      ],
+      "tile": "outdoor.stone_floor",
+      "walkable": true,
+      "tags": [
+        "path"
+      ],
+      "color": "#c0c0c0"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "dining",
+      "name": "식당",
+      "rect": [
+        5,
+        5,
+        12,
+        11
+      ],
+      "tags": [
+        "room",
+        "dining"
+      ],
+      "color": "#d08a4d",
+      "doors": [
+        {
+          "side": "south",
+          "at": 9,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "living",
+      "name": "거실",
+      "rect": [
+        16,
+        5,
+        13,
+        11
+      ],
+      "tags": [
+        "room",
+        "living"
+      ],
+      "color": "#4dd08a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 21,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "master",
+      "name": "안방",
+      "rect": [
+        28,
+        5,
+        15,
+        11
+      ],
+      "tags": [
+        "room",
+        "bedroom"
+      ],
+      "color": "#8a6bb0",
+      "doors": [
+        {
+          "side": "south",
+          "at": 34,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "주방",
+      "rect": [
+        5,
+        15,
+        12,
+        7
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "kitchen"
+      ],
+      "color": "#c9a227",
+      "doors": [
+        {
+          "side": "east",
+          "at": 17,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "lightwell",
+      "name": "채광정",
+      "rect": [
+        16,
+        15,
+        13,
+        7
+      ],
+      "floor": [
+        "outdoor.grass",
+        "outdoor.grass:1"
+      ],
+      "tags": [
+        "lightwell",
+        "outdoor"
+      ],
+      "color": "#9ad06b",
+      "doors": [
+        {
+          "side": "south",
+          "at": 21,
+          "width": 2,
+          "floor": "outdoor.stone_floor"
+        }
+      ]
+    },
+    {
+      "id": "master-bath",
+      "name": "안방욕실",
+      "rect": [
+        28,
+        15,
+        15,
+        7
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "bath"
+      ],
+      "color": "#63b3ff",
+      "doors": [
+        {
+          "side": "west",
+          "at": 17,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 29,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "study",
+      "name": "서재",
+      "rect": [
+        5,
+        21,
+        11,
+        9
+      ],
+      "tags": [
+        "room",
+        "study"
+      ],
+      "color": "#6b4f2a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 24,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "store",
+      "name": "창고",
+      "rect": [
+        5,
+        29,
+        11,
+        10
+      ],
+      "tags": [
+        "room",
+        "store"
+      ],
+      "color": "#7a7a7a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 32,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "onsen",
+      "name": "온천",
+      "rect": [
+        32,
+        21,
+        11,
+        9
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "onsen"
+      ],
+      "color": "#4dc0d0",
+      "doors": [
+        {
+          "side": "west",
+          "at": 24,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "deck",
+      "name": "데크",
+      "rect": [
+        32,
+        29,
+        11,
+        10
+      ],
+      "tags": [
+        "room",
+        "deck"
+      ],
+      "color": "#c98f4d",
+      "doors": [
+        {
+          "side": "west",
+          "at": 32,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "toilet",
+      "name": "화장실",
+      "rect": [
+        5,
+        38,
+        9,
+        9
+      ],
+      "floor": "indoor.tile_floor",
+      "tags": [
+        "room",
+        "bath"
+      ],
+      "color": "#63b3ff",
+      "doors": [
+        {
+          "side": "east",
+          "at": 41,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "tea",
+      "name": "다실",
+      "rect": [
+        13,
+        38,
+        14,
+        9
+      ],
+      "tags": [
+        "room",
+        "tea"
+      ],
+      "color": "#a0c060",
+      "doors": [
+        {
+          "side": "north",
+          "at": 20,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "tatami",
+      "name": "다다미방",
+      "rect": [
+        26,
+        38,
+        17,
+        9
+      ],
+      "tags": [
+        "room",
+        "tatami"
+      ],
+      "color": "#c0a060",
+      "doors": [
+        {
+          "side": "west",
+          "at": 41,
+          "width": 2,
+          "floor": "indoor.door"
+        }
+      ]
+    },
+    {
+      "id": "entry",
+      "name": "현관",
+      "rect": [
+        5,
+        46,
+        14,
+        9
+      ],
+      "floor": "outdoor.stone_floor",
+      "tags": [
+        "room",
+        "entry"
+      ],
+      "color": "#b0b0b0",
+      "doors": [
+        {
+          "side": "north",
+          "at": 9,
+          "width": 2,
+          "floor": "indoor.door"
+        },
+        {
+          "side": "south",
+          "at": 9,
+          "width": 3,
+          "floor": "outdoor.stone_floor"
+        }
+      ]
+    },
+    {
+      "id": "garden",
+      "name": "정원",
+      "rect": [
+        18,
+        46,
+        25,
+        9
+      ],
+      "floor": [
+        "outdoor.grass",
+        "outdoor.grass:1",
+        "outdoor.flowers"
+      ],
+      "tags": [
+        "garden",
+        "outdoor"
+      ],
+      "color": "#6bd08a",
+      "doors": [
+        {
+          "side": "north",
+          "at": 22,
+          "width": 2,
+          "floor": "outdoor.stone_floor"
+        },
+        {
+          "side": "south",
+          "at": 29,
+          "width": 3,
+          "floor": "outdoor.stone_floor"
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "pond",
+      "name": "못",
+      "rect": [
+        20,
+        27,
+        8,
+        6
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "water",
+        "pond"
+      ],
+      "color": "#2f9fd0"
+    },
+    {
+      "id": "onsen-bath",
+      "name": "온천탕",
+      "rect": [
+        35,
+        23,
+        6,
+        5
+      ],
+      "tile": [
+        "outdoor.water",
+        "outdoor.water:1"
+      ],
+      "walkable": false,
+      "tags": [
+        "water",
+        "onsen"
+      ],
+      "color": "#4dc0d0"
+    }
+  ],
+  "props": [
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          8,
+          9
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          10,
+          11
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          10,
+          6
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.sofa",
+      "at": [
+        [
+          20,
+          8
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          22,
+          8
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          20,
+          10
+        ],
+        [
+          21,
+          10
+        ],
+        [
+          22,
+          10
+        ],
+        [
+          20,
+          11
+        ],
+        [
+          21,
+          11
+        ],
+        [
+          22,
+          11
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          18,
+          6
+        ],
+        [
+          19,
+          6
+        ],
+        [
+          25,
+          6
+        ],
+        [
+          26,
+          6
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          27,
+          14
+        ],
+        [
+          17,
+          14
+        ],
+        [
+          41,
+          14
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bed",
+      "at": [
+        [
+          32,
+          8
+        ],
+        [
+          34,
+          8
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          38,
+          6
+        ],
+        [
+          39,
+          6
+        ],
+        [
+          40,
+          6
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          31,
+          12
+        ],
+        [
+          41,
+          12
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          6,
+          16
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          8,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          14,
+          20
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bathtub",
+      "at": [
+        [
+          29,
+          16
+        ],
+        [
+          30,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          40,
+          16
+        ],
+        [
+          41,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          6,
+          22
+        ],
+        [
+          7,
+          22
+        ],
+        [
+          8,
+          22
+        ],
+        [
+          9,
+          22
+        ],
+        [
+          6,
+          28
+        ],
+        [
+          7,
+          28
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          10,
+          25
+        ],
+        [
+          11,
+          25
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          10,
+          27
+        ],
+        [
+          11,
+          27
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          6,
+          30
+        ],
+        [
+          7,
+          30
+        ],
+        [
+          8,
+          30
+        ],
+        [
+          6,
+          37
+        ],
+        [
+          7,
+          37
+        ],
+        [
+          8,
+          37
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          33,
+          22
+        ],
+        [
+          33,
+          23
+        ],
+        [
+          33,
+          24
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          40,
+          28
+        ],
+        [
+          41,
+          28
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.sofa",
+      "at": [
+        [
+          34,
+          32
+        ],
+        [
+          35,
+          32
+        ],
+        [
+          36,
+          32
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          34,
+          34
+        ],
+        [
+          35,
+          34
+        ],
+        [
+          36,
+          34
+        ],
+        [
+          34,
+          35
+        ],
+        [
+          35,
+          35
+        ],
+        [
+          36,
+          35
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          41,
+          30
+        ],
+        [
+          33,
+          37
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bathtub",
+      "at": [
+        [
+          6,
+          39
+        ],
+        [
+          7,
+          39
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          11,
+          39
+        ],
+        [
+          12,
+          39
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          19,
+          42
+        ],
+        [
+          20,
+          42
+        ],
+        [
+          19,
+          43
+        ],
+        [
+          20,
+          43
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          18,
+          42
+        ],
+        [
+          21,
+          43
+        ],
+        [
+          19,
+          41
+        ],
+        [
+          20,
+          44
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          15,
+          41
+        ],
+        [
+          16,
+          41
+        ],
+        [
+          15,
+          42
+        ],
+        [
+          16,
+          42
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.rug",
+      "at": [
+        [
+          29,
+          41
+        ],
+        [
+          30,
+          41
+        ],
+        [
+          31,
+          41
+        ],
+        [
+          29,
+          42
+        ],
+        [
+          30,
+          42
+        ],
+        [
+          31,
+          42
+        ],
+        [
+          35,
+          41
+        ],
+        [
+          36,
+          41
+        ],
+        [
+          37,
+          41
+        ],
+        [
+          35,
+          42
+        ],
+        [
+          36,
+          42
+        ],
+        [
+          37,
+          42
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          33,
+          43
+        ],
+        [
+          34,
+          43
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          27,
+          45
+        ],
+        [
+          41,
+          39
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          6,
+          47
+        ],
+        [
+          17,
+          47
+        ],
+        [
+          6,
+          53
+        ],
+        [
+          17,
+          53
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          6,
+          17
+        ],
+        [
+          7,
+          17
+        ],
+        [
+          8,
+          17
+        ],
+        [
+          9,
+          17
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          11,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          12,
+          12
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          17,
+          12
+        ],
+        [
+          18,
+          12
+        ],
+        [
+          27,
+          12
+        ],
+        [
+          28,
+          12
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          17,
+          6
+        ],
+        [
+          28,
+          6
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          28,
+          11
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          24,
+          9
+        ],
+        [
+          25,
+          9
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          30,
+          12
+        ],
+        [
+          31,
+          12
+        ],
+        [
+          41,
+          12
+        ],
+        [
+          42,
+          12
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          35,
+          10
+        ],
+        [
+          36,
+          10
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          29,
+          6
+        ],
+        [
+          42,
+          6
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          6,
+          21
+        ],
+        [
+          7,
+          21
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          10,
+          21
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bathtub",
+      "at": [
+        [
+          38,
+          16
+        ],
+        [
+          39,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          30,
+          16
+        ],
+        [
+          31,
+          16
+        ],
+        [
+          32,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          6,
+          26
+        ],
+        [
+          7,
+          26
+        ],
+        [
+          8,
+          26
+        ],
+        [
+          9,
+          26
+        ],
+        [
+          10,
+          26
+        ],
+        [
+          11,
+          26
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          7,
+          24
+        ],
+        [
+          10,
+          24
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          7,
+          31
+        ],
+        [
+          8,
+          31
+        ],
+        [
+          9,
+          31
+        ],
+        [
+          10,
+          31
+        ],
+        [
+          11,
+          31
+        ],
+        [
+          7,
+          37
+        ],
+        [
+          8,
+          37
+        ],
+        [
+          9,
+          37
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          33,
+          22
+        ],
+        [
+          33,
+          28
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          33,
+          27
+        ],
+        [
+          40,
+          21
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.chair",
+      "at": [
+        [
+          37,
+          34
+        ],
+        [
+          38,
+          34
+        ],
+        [
+          41,
+          34
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          33,
+          32
+        ],
+        [
+          42,
+          38
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.counter",
+      "at": [
+        [
+          6,
+          43
+        ],
+        [
+          7,
+          43
+        ],
+        [
+          8,
+          43
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bathtub",
+      "at": [
+        [
+          10,
+          39
+        ],
+        [
+          10,
+          40
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          14,
+          44
+        ],
+        [
+          15,
+          44
+        ],
+        [
+          24,
+          44
+        ],
+        [
+          25,
+          44
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          14,
+          39
+        ],
+        [
+          25,
+          39
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          27,
+          44
+        ],
+        [
+          28,
+          44
+        ],
+        [
+          41,
+          44
+        ],
+        [
+          42,
+          44
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.table",
+      "at": [
+        [
+          36,
+          45
+        ],
+        [
+          37,
+          45
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          27,
+          39
+        ],
+        [
+          42,
+          39
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.plant",
+      "at": [
+        [
+          7,
+          47
+        ],
+        [
+          8,
+          47
+        ],
+        [
+          15,
+          47
+        ],
+        [
+          15,
+          53
+        ]
+      ]
+    },
+    {
+      "tile": "indoor.bookshelf",
+      "at": [
+        [
+          6,
+          54
+        ],
+        [
+          7,
+          54
+        ]
+      ]
+    }
+  ],
+  "scatter": [
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.34,
+      "seed": 11,
+      "onTile": "outdoor.grass",
+      "blocking": true,
+      "rect": [
+        0,
+        0,
+        48,
+        4
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.34,
+      "seed": 12,
+      "onTile": "outdoor.grass",
+      "blocking": true,
+      "rect": [
+        0,
+        56,
+        48,
+        4
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.34,
+      "seed": 13,
+      "onTile": "outdoor.grass",
+      "blocking": true,
+      "rect": [
+        0,
+        4,
+        4,
+        52
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.34,
+      "seed": 14,
+      "onTile": "outdoor.grass",
+      "blocking": true,
+      "rect": [
+        44,
+        4,
+        4,
+        52
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.24,
+      "seed": 31,
+      "onTile": "outdoor.grass",
+      "blocking": true,
+      "rect": [
+        19,
+        47,
+        23,
+        7
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.flowers",
+        "outdoor.flowers:1",
+        "outdoor.flowers:3",
+        "outdoor.bush"
+      ],
+      "density": 0.22,
+      "seed": 41,
+      "onTile": "outdoor.grass",
+      "blocking": false,
+      "layer": "back"
+    },
+    {
+      "tile": [
+        "outdoor.tree",
+        "outdoor.tree:1"
+      ],
+      "density": 0.16,
+      "seed": 51,
+      "onTile": "outdoor.stone_floor",
+      "blocking": true,
+      "rect": [
+        18,
+        24,
+        12,
+        12
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.flowers",
+        "outdoor.bush",
+        "outdoor.flowers:3"
+      ],
+      "density": 0.3,
+      "seed": 61,
+      "onTile": "outdoor.stone_floor",
+      "blocking": false,
+      "layer": "back",
+      "rect": [
+        18,
+        24,
+        12,
+        12
+      ]
+    },
+    {
+      "tile": [
+        "outdoor.flowers",
+        "outdoor.bush"
+      ],
+      "density": 0.35,
+      "seed": 71,
+      "onTile": "outdoor.grass",
+      "blocking": false,
+      "layer": "back",
+      "rect": [
+        16,
+        15,
+        13,
+        7
+      ]
+    }
+  ],
+  "spawnPoints": [
+    {
+      "x": 10,
+      "y": 56,
+      "label": "대문 앞"
+    },
+    {
+      "x": 19,
+      "y": 25,
+      "label": "중정 못가"
+    },
+    {
+      "x": 24,
+      "y": 23,
+      "label": "회랑"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "slug": "proto-interior",
+  "name": "프로토 실내 — 저택 1층",
+  "description": "파이프라인 왕복 검증용 실내 평면도. 타일은 코드로 그린 프로토타입이다. 방 8개가 벽을 공유하고 문으로 이어진다.",
+  "width": 40,
+  "height": 30,
+  "tileSize": 32,
+
+  "tiles": {
+    "ground": ["wood_floor", "wood_floor:1"],
+    "floor": ["wood_floor", "wood_floor:1"],
+    "wall": "wall"
+  },
+  "groundWalkable": false,
+
+  "rooms": [
+    {
+      "id": "bedroom-1", "name": "침실 1", "rect": [0, 0, 13, 11],
+      "tags": ["room", "bedroom"], "color": "#8a6bb0",
+      "doors": [{ "side": "south", "at": 6, "width": 2, "floor": "door" },
+                { "side": "east", "at": 5, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "bedroom-2", "name": "침실 2", "rect": [12, 0, 13, 11],
+      "tags": ["room", "bedroom"], "color": "#8a6bb0",
+      "doors": [{ "side": "south", "at": 18, "width": 2, "floor": "door" },
+                { "side": "east", "at": 5, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "kitchen", "name": "주방", "rect": [24, 0, 16, 11],
+      "floor": "tile_floor", "tags": ["room", "kitchen"], "color": "#c9a227",
+      "doors": [{ "side": "south", "at": 31, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "bath", "name": "욕실", "rect": [0, 10, 13, 10],
+      "floor": "tile_floor", "tags": ["room", "bath"], "color": "#63b3ff",
+      "doors": [{ "side": "east", "at": 14, "width": 2, "floor": "door" },
+                { "side": "south", "at": 6, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "study", "name": "서재", "rect": [12, 10, 13, 10],
+      "tags": ["room", "study"], "color": "#6b4f2a",
+      "doors": [{ "side": "east", "at": 14, "width": 2, "floor": "door" },
+                { "side": "south", "at": 18, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "living", "name": "거실", "rect": [24, 10, 16, 10],
+      "tags": ["room", "living"], "color": "#4dd08a",
+      "doors": [{ "side": "south", "at": 31, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "dining", "name": "식당", "rect": [0, 19, 20, 11],
+      "tags": ["room", "dining"], "color": "#d08a4d",
+      "doors": [{ "side": "east", "at": 24, "width": 2, "floor": "door" }]
+    },
+    {
+      "id": "bedroom-3", "name": "침실 3", "rect": [19, 19, 21, 11],
+      "tags": ["room", "bedroom"], "color": "#8a6bb0"
+    }
+  ],
+
+  "props": [
+    { "tile": "bed", "at": [[2, 2], [4, 2], [14, 2], [16, 2], [22, 22], [25, 22]] },
+    { "tile": "bookshelf", "at": [[13, 12], [14, 12], [15, 12], [23, 15], [23, 16]] },
+    { "tile": "sofa", "at": [[27, 13], [28, 13], [29, 13]] },
+    { "tile": "rug", "at": [[27, 15], [28, 15], [29, 15], [27, 16], [28, 16], [29, 16]], "blocking": false },
+    { "tile": "table", "at": [[5, 23], [6, 23], [5, 24], [6, 24]] },
+    { "tile": "chair", "at": [[4, 23], [7, 24], [5, 22], [6, 25]] },
+    { "tile": "bathtub", "at": [[2, 12], [3, 12]] },
+    { "tile": "counter", "at": [[25, 2], [26, 2], [27, 2], [28, 2], [29, 2]] },
+    { "tile": "plant", "at": [[11, 9], [22, 9], [38, 9], [11, 18], [38, 18], [18, 28], [37, 21], [1, 28]] }
+  ]
+}

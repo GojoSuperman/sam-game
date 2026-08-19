@@ -3,6 +3,9 @@
 SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
 
 - 조사 결과와 구조 전체: **[docs/SPUM SAM 연동 구조.md](docs/SPUM%20SAM%20연동%20구조.md)**
+- 맵 스키마와 생성기: **[docs/SPUM 맵 스키마와 생성.md](docs/SPUM%20맵%20스키마와%20생성.md)**
+- 무엇을 Studio 에서 / 무엇을 코드에서: **[docs/Studio와 Claude Code 역할 분담.md](docs/Studio%EC%99%80%20Claude%20Code%20%EC%97%AD%ED%95%A0%20%EB%B6%84%EB%8B%B4.md)**
+- 이미지로 맵 만들기 (스킬 계획): **[docs/이미지로 맵 만들기 — 스킬 계획서.md](docs/%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A1%9C%20%EB%A7%B5%20%EB%A7%8C%EB%93%A4%EA%B8%B0%20%E2%80%94%20%EC%8A%A4%ED%82%AC%20%EA%B3%84%ED%9A%8D%EC%84%9C.md)**
 - SAM API 스펙 전체: **[docs/SAM API 레퍼런스.md](docs/SAM%20API%20레퍼런스.md)**
 - 요구 환경: Node 22+ (현재 v24.16.0 확인), 의존성 없음 — 전부 표준 라이브러리
 
@@ -52,20 +55,43 @@ pnpm verify        # 실제 호출로 연결 검증
 | `pnpm models` | 모델 52개를 지연 낮은 순으로. `--image` 로 이미지 모델만 |
 | `pnpm proxy` | SAM 프록시 기동 (`localhost:8787`) |
 | `pnpm bake --config bake/example-world.json` | 월드 `bakedData` 생성 |
+| `pnpm map --config bake/example-map.json --preview --html` | 레이아웃 설정 → Studio 맵 생성 |
+| `pnpm fetch-theme` | SPUM 기본 맵 테마 수집 (야외 타일 20장, 로그인 불필요) |
+| `pnpm tileset` | 실내 타일셋을 코드로 생성 (프로토타입 15장) |
+| `pnpm tiles` | 타일 표 (`out/tile-picker.html`) — 테마가 있으면 테마를 |
+| `pnpm assets` | CC0 타일 팩 다운로드 (Kenney, git 제외) |
+| `pnpm import-tileset --spec <스펙>` | 외부 시트 → SPUM 테마 (여백 재포장·배율·영역 수집) |
+| `pnpm ai-source --spec <스펙>` | Object 에디터 AI 생성용 소스 이미지 + 프롬프트 |
+| `pnpm asset-snippet --backup <백업>` | 테마 타일 이미지를 브라우저에서 받는 스니펫 |
+| `pnpm theme-from-backup --backup <백업>` | 백업의 맵 테마를 코드로 가져오기 |
 
 ## 구조
 
 ```
 src/sam.mjs             SAM 클라이언트 — generate / stream / image / account, 에러·재시도
+src/spum-map.mjs        맵 레코드 스키마 — 정규화·검증 (Studio 가 조용히 덮는 것을 먼저 잡는다)
+src/spum-theme.mjs      맵 테마 — 타일 별칭·분류·이동 특성
+src/png.mjs             최소 PNG 인코더 + 그리기 캔버스 (의존성 없음)
+src/tile-art.mjs        실내 타일을 코드로 그린다 (프로토타입)
+src/studio-snippet.mjs  맵만 넣는 콘솔 스니펫 (전체 교체를 피한다)
+src/map-builder.mjs     레이아웃 설정(방·복도·문) -> 맵 레코드
+src/map-preview.mjs     맵 레코드 -> 미리보기 HTML
+src/studio-backup.mjs   Studio 백업 파일 읽기·병합 (불러오기는 병합이 아니라 전체 교체다)
 src/tiers.mjs           light|medium|expert -> 실제 SAM alias 변환 (자체 프록시의 필수 조건)
 src/baked-schema.mjs    bakedData v0.4 정규화·검증 (SPUM 이 조용히 버리는 항목을 먼저 잡는다)
 server/sam-proxy.mjs    /api/sam/* 프록시 — 키 서버 보관, 티어 변환, SSE 통과, 쌤 누적 로그
 scripts/verify-sam.mjs  실제 호출 검증
 scripts/bake-world.mjs  SAM 으로 bakedData 생성 -> out/
+scripts/make-map.mjs    맵 생성 CLI -> out/<slug>-studio-map.json
+scripts/fetch-theme.mjs 기본 맵 테마 수집 -> out/themes/spum-default.json
+scripts/make-tileset.mjs 실내 타일셋 생성 -> out/themes/proto-interior.json
+scripts/tile-picker.mjs 타일 표 -> out/tile-picker.html
 scripts/check-tiers.mjs 티어 매핑 검사
 scripts/list-models.mjs 모델 카탈로그
 web/spum-live-bootstrap.js  SPUM 런타임을 내 프록시로 돌리는 스니펫
 bake/example-world.json     bake 설정 예시
+bake/example-map.json       맵 레이아웃 예시 (서고 게임의 방 6개, 야외)
+bake/proto-interior.json    실내 평면도 예시 (방 8개, 벽 공유)
 ```
 
 ## 두 레인

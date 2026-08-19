@@ -1,0 +1,279 @@
+{
+  "slug": "seogo-night",
+  "name": "서고의 밤 — 저택 부지",
+  "description": "서고 심문 게임의 방 6개(서고·안뜰·부엌·동문 초소·뒷마당·숙소)를 타일맵으로 옮긴 것. 방 이름은 원본 게임의 ROOMS 와 같다. 타일은 SPUM 기본 맵 테마(야외 자연 20장)라 실내 가구가 없다 — 건물은 돌담과 흙바닥으로만 표현된다.",
+  "width": 40,
+  "height": 30,
+  "tileSize": 32,
+  "tiles": {
+    "ground": [
+      "grass",
+      "grass:1",
+      "grass:2",
+      "grass:3",
+      "flowers",
+      "flowers:2"
+    ],
+    "floor": "dirt",
+    "wall": "stone_wall"
+  },
+  "groundWalkable": false,
+  "rooms": [
+    {
+      "id": "archive",
+      "name": "서고",
+      "description": "사건이 시작된 곳. 장서와 필사대.",
+      "rect": [
+        1,
+        1,
+        16,
+        11
+      ],
+      "floor": "dirt",
+      "tags": [
+        "room",
+        "indoor"
+      ],
+      "color": "#6b4f2a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 8,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "부엌",
+      "description": "하웰과 도른이 마주친 자리.",
+      "rect": [
+        22,
+        1,
+        15,
+        9
+      ],
+      "floor": "dirt",
+      "tags": [
+        "room",
+        "indoor"
+      ],
+      "color": "#8a5a2b",
+      "doors": [
+        {
+          "side": "south",
+          "at": 28,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "court",
+      "name": "안뜰",
+      "description": "모든 통로가 지나는 중앙 마당.",
+      "rect": [
+        6,
+        13,
+        26,
+        6
+      ],
+      "walls": false,
+      "floor": "stone_floor",
+      "tags": [
+        "room",
+        "outdoor",
+        "hub"
+      ],
+      "color": "#c9a227"
+    },
+    {
+      "id": "quarters",
+      "name": "숙소",
+      "description": "고용인들이 자는 곳.",
+      "rect": [
+        2,
+        21,
+        13,
+        8
+      ],
+      "floor": "dirt",
+      "tags": [
+        "room",
+        "indoor"
+      ],
+      "color": "#4f6b8a",
+      "doors": [
+        {
+          "side": "north",
+          "at": 7,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "yard",
+      "name": "뒷마당",
+      "description": "담장 아래 흙과 잡초.",
+      "rect": [
+        20,
+        21,
+        14,
+        8
+      ],
+      "walls": false,
+      "floor": [
+        "dirt",
+        "dirt",
+        "dirt",
+        "dirt",
+        "dirt:1",
+        "dirt:2"
+      ],
+      "tags": [
+        "room",
+        "outdoor"
+      ],
+      "color": "#5a7a3a"
+    },
+    {
+      "id": "gate",
+      "name": "동문 초소",
+      "description": "밤새 문을 지킨다고 했던 자리.",
+      "rect": [
+        33,
+        13,
+        6,
+        6
+      ],
+      "floor": "dirt",
+      "tags": [
+        "room",
+        "indoor"
+      ],
+      "color": "#7a4f4f",
+      "doors": [
+        {
+          "side": "west",
+          "at": 15,
+          "width": 2
+        }
+      ]
+    }
+  ],
+  "corridors": [
+    {
+      "name": "서고 앞",
+      "rect": [
+        8,
+        11,
+        2,
+        3
+      ],
+      "floor": "stone_floor"
+    },
+    {
+      "name": "부엌 앞",
+      "rect": [
+        28,
+        9,
+        2,
+        5
+      ],
+      "floor": "stone_floor"
+    },
+    {
+      "name": "숙소 길",
+      "rect": [
+        7,
+        18,
+        2,
+        4
+      ],
+      "floor": "stone_floor"
+    },
+    {
+      "name": "뒷마당 길",
+      "rect": [
+        25,
+        18,
+        2,
+        4
+      ],
+      "floor": "stone_floor"
+    },
+    {
+      "name": "동문 길",
+      "rect": [
+        31,
+        15,
+        3,
+        2
+      ],
+      "floor": "stone_floor"
+    }
+  ],
+  "props": [
+    {
+      "tile": "tree",
+      "at": [
+        [
+          12,
+          14
+        ],
+        [
+          18,
+          17
+        ]
+      ]
+    },
+    {
+      "tile": "tree:1",
+      "at": [
+        30,
+        17
+      ]
+    },
+    {
+      "tile": "flowers",
+      "at": [
+        [
+          22,
+          22
+        ],
+        [
+          31,
+          26
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "flowers:3",
+      "at": [
+        [
+          24,
+          27
+        ],
+        [
+          28,
+          23
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "bush",
+      "at": [
+        [
+          21,
+          25
+        ],
+        [
+          33,
+          22
+        ]
+      ],
+      "blocking": false
+    }
+  ]
+}
