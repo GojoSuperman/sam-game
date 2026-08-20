@@ -12,6 +12,8 @@
  * 사용:
  *   node scripts/make-scene-map.mjs --name "중세 대장간" --prompt-file <파일> --headed --record
  *   node scripts/make-scene-map.mjs --name "..." --prompt-text "..." --headed
+ *   ... --quality medium   생성 품질 (low|medium|high, 기본 high). 504 가 잦으면 낮춘다
+ *   ... --model FLUX.2-pro 모델 (gpt-image-2|gpt-image|FLUX.2-pro, 기본 gpt-image-2)
  *   ... --dry-run   그림만 만들고 주입은 하지 않는다
  */
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -33,10 +35,15 @@ const headed = has('--headed');
 const record = has('--record');
 const dryRun = has('--dry-run');
 const jpegQ = arg('--jpeg', '68');
+// 생성 품질·모델. UI 기본은 quality=low 인데 파이프라인은 high 를 써 왔다.
+// high 는 생성이 길어져 앞단 nginx 타임아웃(504)에 걸릴 확률이 오른다 —
+// 서버가 밀릴 땐 medium/low 로 낮춰 통과시키는 게 낫다 (2026-08-20 실측: 504 두 번, 249쌤 소모).
+const quality = arg('--quality', 'high');
+const model = arg('--model', 'gpt-image-2');
 const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 
 if (!mapName || (!promptFile && !promptText)) {
-  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>") [--headed] [--record] [--dry-run]');
+  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>") [--headed] [--record] [--dry-run] [--quality low|medium|high] [--model gpt-image-2|gpt-image|FLUX.2-pro]');
   process.exit(1);
 }
 
@@ -69,7 +76,7 @@ async function halve(srcPath, outPath) {
 }
 
 const text = promptText || (await readFile(promptFile, 'utf8')).trim();
-console.log(`맵 "${mapName}" · 프롬프트 ${text.length}자${text.length > 520 ? '  ⚠ 520자를 넘으면 504 가 나기 쉽습니다' : ''}`);
+console.log(`맵 "${mapName}" · 프롬프트 ${text.length}자 · ${model}/${quality}${text.length > 520 ? '  ⚠ 520자를 넘으면 504 가 나기 쉽습니다' : ''}`);
 
 await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } : {}) }, async (ctx) => {
   const page = ctx.pages()[0] ?? (await ctx.newPage());
@@ -85,7 +92,7 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   // ── ① 씬 ──────────────────────────────────────────────
   step(1, `씬 조감도 생성 — "${mapName}"`);
   let ed = await createAndOpenTheme(page);
-  await setupTheme(page, ed, { name: mapName, promptText: text, tags: `scene, 32x32, ${mapName}` });
+  await setupTheme(page, ed, { name: mapName, promptText: text, tags: `scene, 32x32, ${mapName}`, quality, model });
   const scenePath = path.join('out', 'assets-studio', `${safe(mapName)}__scene-${stamp}.png`);
   if (!(await generate(page, ed, capture, scenePath))) {
     throw new Error('씬 생성 실패 — 504 이거나 응답에 이미지가 없습니다. 프롬프트를 줄여 다시 시도하세요.');
@@ -99,7 +106,7 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   // ── ③ 마스크 ──────────────────────────────────────────
   step(3, '통행 마스크 생성 (img2img — 구조를 유지시킨다)');
   ed = await createAndOpenTheme(page);
-  await setupTheme(page, ed, { name: `${mapName} 마스크`, promptText: MASK_PROMPT, tags: 'mask, 32x32' });
+  await setupTheme(page, ed, { name: `${mapName} 마스크`, promptText: MASK_PROMPT, tags: 'mask, 32x32', quality, model });
   await applySource(page, ed, refPath);
   const maskPath = path.join('out', 'assets-studio', `${safe(mapName)}__mask-${stamp}.png`);
   if (!(await generate(page, ed, capture, maskPath))) {

@@ -45,13 +45,21 @@ export async function frameWith(page, selector, timeoutMs = 25000) {
 export async function attachImageCapture(page, log = console.log) {
   let latest = null;
   await page.route('**/api/ai-tiles/**', async (route) => {
+    // ★ 경과 시간을 남긴다 (2026-08-20): 504 가 났을 때 "몇 초에서 끊겼는지" 가 없으면
+    //   업스트림 지연인지 앞단 nginx 타임아웃인지 구분할 수가 없다. 정상 생성은 60~70초다.
+    const t0 = Date.now();
     try {
       // 생성은 1분 이상 걸린다 — 기본 30초로는 못 기다린다
       const resp = await route.fetch({ timeout: 300000 });
       const buf = await resp.body();
       const url = route.request().url();
+      const sec = ((Date.now() - t0) / 1000).toFixed(1);
       if (url.includes('/generate')) {
-        log(`  [api] ${resp.status()} ${url.replace(/^https?:\/\/[^/]+/, '').split('?')[0]}`);
+        const via = resp.headers()['server'] ? ` · ${resp.headers()['server']}` : '';
+        log(`  [api] ${resp.status()} ${url.replace(/^https?:\/\/[^/]+/, '').split('?')[0]}  ${sec}초${via}`);
+        if (resp.status() === 504) {
+          log(`  [api] ↳ 504 는 앞단이 업스트림 응답을 못 기다리고 끊은 것입니다 (정상 생성 60~70초). 과금은 됩니다.`);
+        }
         if (resp.ok()) {
           try {
             const scan = (v, d = 0) => {
@@ -70,7 +78,7 @@ export async function attachImageCapture(page, log = console.log) {
       }
       await route.fulfill({ response: resp, body: buf });
     } catch (e) {
-      log(`  [route] 프록시 실패 — 원 요청을 흘려보냅니다: ${e.message.split('\n')[0]}`);
+      log(`  [route] 프록시 실패(${((Date.now() - t0) / 1000).toFixed(1)}초) — 원 요청을 흘려보냅니다: ${e.message.split('\n')[0]}`);
       try { await route.continue(); } catch { /* 이미 처리됨 */ }
     }
   });

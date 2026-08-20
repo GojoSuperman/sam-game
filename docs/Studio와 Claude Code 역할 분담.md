@@ -618,10 +618,61 @@ Keep the exact same shapes and positions as the reference. Square image on a 32x
 **참조 이미지는 줄여서 넣는다.** 1024²(1.7MB) 를 그대로 주면 `413 Payload Too Large`.
 512²(625KB) 로 줄이면 통과한다 — 구조만 유지되면 되므로 화질은 문제되지 않는다.
 
-### 10-3. 프롬프트 길이가 504 를 가른다
+### 10-3. 504 는 프롬프트 길이보다 **생성 시간**의 문제다
 
 1099자 프롬프트에서 `504 Gateway Timeout` 이 났다. 구역 배치는 남기고 재질·스타일 설명을
 압축해 **480자**로 줄이니 안정적으로 성공했다 (`bake/prompts/ship-scene-short.txt`).
+
+**그러나 길이가 전부가 아니다 (2026-08-20 실측).** 같은 470자 프롬프트로
+"성주의 거처" 는 통과했고 "다다미 집" 은 **두 번 연속 504** 가 났다. 길이는
+생성 시간을 늘리는 여러 요인 중 하나일 뿐이다.
+
+#### 왜 나는가 — 구조를 뜯어본 결과
+
+| 확인한 것 | 방법 | 결과 |
+|---|---|---|
+| 앞단이 무엇인가 | `OPTIONS/GET /api/ai-tiles/generate` (생성 안 함, 과금 0) | `server: nginx/1.28.2`, 196ms 즉답 |
+| 잡 큐가 있는가 | Studio 스크립트 229개 전수 검색 | **없다.** `/api/ai-tiles/generate` 단일 동기 POST, 폴링 경로 없음 |
+| 클라이언트 재시도 | 〃 | **없다** (`retry`/`maxAttempts` 0건) |
+| 그들의 대응 방식 | `AgentChat.js` | `[500,502,503,504]` 또는 `overloaded`/`Vertex error` 면 **모델 등급을 낮춰 재시도** |
+
+즉 **이미지가 다 만들어질 때까지 커넥션을 붙잡는 구조**이고, 업스트림(Vertex 계열)이
+늘어지면 앞단 nginx 가 먼저 끊는다. 애플리케이션 오류도, 인증 문제도, 우리 코드 문제도 아니다.
+**과금은 업스트림에서 이미 일어나므로 504 여도 쌤은 나간다** (실측: 두 번 실패에 249쌤).
+
+#### 대응 — quality 를 낮춘다
+
+`setupTheme` 는 `quality: 'high'` 를 강제해 왔다. **Studio UI 기본값은 `low` 다.**
+선택지는 `low | medium | high`, 모델은 `gpt-image-2 | gpt-image | FLUX.2-pro`.
+
+| 설정 | 씬 생성 | 마스크 생성 | 결과 |
+|---|---|---|---|
+| high | 60~70초 (성공 시) · 5~7분 매달리다 끊김 | 〃 | 같은 프롬프트로 **504 두 번** |
+| **medium** | **36.2초** | **34.2초** | **한 번에 200** |
+
+품질만 낮췄는데 생성 시간이 절반 이하로 줄면서 통과했다. 서버가 밀릴 땐 medium 을 쓴다:
+
+```bash
+npm run scene-map -- --name "다다미 집" --prompt-file <파일> --headed --quality medium
+```
+
+`--quality low|medium|high` · `--model <모델>` 로 조절한다 (기본은 high/gpt-image-2 유지).
+
+#### 진단을 위해 남긴 것
+
+`src/studio-scene.mjs` 의 route 핸들러가 요청별 경과 시간을 찍는다.
+504 가 났을 때 "몇 초에서 끊겼는지" 가 없으면 업스트림 지연인지 앞단 타임아웃인지 구분할 수 없다.
+
+```
+[api] 200 /api/ai-tiles/generate  36.2초 · nginx/1.28.2
+[api] 504 … ↳ 앞단이 업스트림 응답을 못 기다리고 끊은 것입니다. 과금은 됩니다.
+```
+
+> **아직 모르는 것**: nginx 의 정확한 타임아웃 값. 504 는 느린 생성에서만 재현되고
+> 그때마다 125쌤이 나가서 확정을 미뤘다. 위 로그가 남으므로 다음 504 한 번이면 특정된다.
+
+> 공개 문서는 없다. SPUM 위키·저장소·SPUM-Experiments·soonsoon.ai 전부
+> 유니티용 캐릭터 제작기 문서뿐이고 웹 스튜디오 API 언급이 없다 (문의: soonsoon@soonsoons.com).
 
 ### 10-4. localStorage 한도 — 여기서 두 번 막힌다
 

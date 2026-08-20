@@ -51,7 +51,7 @@ No text, no people, no UI. Square, aligned to a 32x32 grid.
 ## 2. 실행
 
 ```bash
-npm run scene-map -- --name "<맵 이름>" --prompt-file <프롬프트 파일> --headed [--record]
+npm run scene-map -- --name "<맵 이름>" --prompt-file <프롬프트 파일> --headed --quality medium [--record]
 ```
 
 창 하나가 뜨고 여섯 단계가 이어진다:
@@ -63,6 +63,9 @@ npm run scene-map -- --name "<맵 이름>" --prompt-file <프롬프트 파일> -
 ```
 
 - `--headed` 를 빼면 창 없이 돌지만, 사용자가 지켜볼 수 없다. **기본으로 붙인다.**
+- `--quality medium` 을 기본으로 붙인다. high 는 생성이 60~70초로 길어져 앞단 nginx 타임아웃(504)에
+  걸린다 — 실측으로 같은 프롬프트가 high 에서 두 번 연속 504(249쌤 증발), medium 에서 36초에 통과했다.
+  화질을 최대로 뽑아야 할 때만 `--quality high` 로 올린다.
 - `--record` 를 붙이면 전 과정이 `out/videos/*.webm` 으로 남는다 (창을 닫아야 파일이 떨어진다).
 - `--dry-run` 은 그림만 만들고 주입하지 않는다.
 
@@ -80,7 +83,7 @@ npm run scene-map -- --name "<맵 이름>" --prompt-file <프롬프트 파일> -
 
 | 증상 | 원인과 대응 |
 |---|---|
-| `504 Gateway Timeout` | 프롬프트가 길다. 450자대로 줄여 재시도. **과금은 된다** |
+| `504 Gateway Timeout` | **`--quality medium` 으로 낮춰 재시도**(가장 잘 듣는다). 그래도 나면 프롬프트를 450자대로 줄인다. 앞단 nginx 가 늘어진 생성을 끊는 것이라 **과금은 된다** — 로그의 `[api] 504 … N초` 로 몇 초에서 끊겼는지 확인할 수 있다 |
 | `413 Payload Too Large` | 참조 이미지가 크다. 512² 로 줄인다 (스크립트가 자동 처리) |
 | `QuotaExceededError` | localStorage 한도(약 5MB). `--jpeg 60` 으로 더 압축하거나, 큰 항목을 지운다. **무엇을 지울지 사용자에게 먼저 묻는다** |
 | 프로필 점유 오류 | `npm run studio-open` 창이 떠 있다. 닫고 다시 실행 |
