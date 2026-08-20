@@ -1,0 +1,176 @@
+{
+  "key": "shipai",
+  "name": "우주선 실내 AI (바닥)",
+  "assetId": "theme_ship_ai_floor",
+  "source": "out/assets-studio/ship-ai-512.png",
+  "sourcePack": "SPUM Studio AI 생성 (gpt-image-2, quality high)",
+  "license": "본인 계정에서 생성 — SPUM Studio",
+  "srcTileSize": 32,
+  "srcMargin": 0,
+  "outTileSize": 32,
+  "columns": 8,
+  "tileIdBase": 2049,
+  "note": "1024² 원본을 512² 로 줄여 셀을 32px 로 맞췄다 (import-tileset 은 축소를 지원하지 않는다). 사분면 = 갑판/격자/세라믹/화물칸. 같은 별칭을 4번씩 넣어 make-map 이 \"별칭:N\" 으로 변형을 고를 수 있게 했다 (import-tileset 은 alias 를 그대로 키로 쓰고 중복은 배열로 쌓는다).",
+  "tiles": [
+    {
+      "alias": "deck",
+      "at": [
+        0,
+        0
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "금속 갑판 1"
+    },
+    {
+      "alias": "deck",
+      "at": [
+        2,
+        3
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "금속 갑판 2"
+    },
+    {
+      "alias": "deck",
+      "at": [
+        5,
+        1
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "금속 갑판 3"
+    },
+    {
+      "alias": "deck",
+      "at": [
+        3,
+        6
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "금속 갑판 4"
+    },
+    {
+      "alias": "grate",
+      "at": [
+        8,
+        0
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "통풍 격자 1"
+    },
+    {
+      "alias": "grate",
+      "at": [
+        11,
+        3
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "통풍 격자 2"
+    },
+    {
+      "alias": "grate",
+      "at": [
+        14,
+        1
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "통풍 격자 3"
+    },
+    {
+      "alias": "grate",
+      "at": [
+        9,
+        6
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "통풍 격자 4"
+    },
+    {
+      "alias": "bridge_floor",
+      "at": [
+        0,
+        8
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "함교 세라믹 1"
+    },
+    {
+      "alias": "bridge_floor",
+      "at": [
+        3,
+        11
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "함교 세라믹 2"
+    },
+    {
+      "alias": "bridge_floor",
+      "at": [
+        6,
+        9
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "함교 세라믹 3"
+    },
+    {
+      "alias": "bridge_floor",
+      "at": [
+        2,
+        14
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "함교 세라믹 4"
+    },
+    {
+      "alias": "cargo_floor",
+      "at": [
+        8,
+        8
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "화물칸 강판 1"
+    },
+    {
+      "alias": "cargo_floor",
+      "at": [
+        11,
+        11
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "화물칸 강판 2"
+    },
+    {
+      "alias": "cargo_floor",
+      "at": [
+        14,
+        9
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "화물칸 강판 3"
+    },
+    {
+      "alias": "cargo_floor",
+      "at": [
+        10,
+        14
+      ],
+      "category": "floor",
+      "movement": "passable",
+      "name": "화물칸 강판 4"
+    }
+  ]
+}

@@ -9,17 +9,35 @@ SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
 - SAM API 스펙 전체: **[docs/SAM API 레퍼런스.md](docs/SAM%20API%20레퍼런스.md)**
 - 요구 환경: Node 22+ (현재 v24.16.0 확인), 의존성 없음 — 전부 표준 라이브러리
 
-## 현재 상태 (2026-08-18 19:00 실측)
+## 현재 상태 (2026-08-20 실측)
 
-두 가지가 막혀 있다. 자세한 근거는 연동 구조 문서 11절.
+### 되는 것
 
-1. **SAM 생성 호출 전면 불가** — `POST /v1/generate` 가 약 30.7초 뒤 503
-   `Account initialization is temporarily unavailable`. 키 4개·모델·표면(native/OpenAI/Anthropic)을
-   모두 바꿔봐도 동일하고, `GET /v1/models` 는 항상 200 이다. **SoonSoon 서버측 문제**로
-   클라이언트에서 고칠 수 없다. `pnpm doctor` 로 상태를 다시 확인한다.
-2. **SPUM 은 free 티어, `canUseAI: false`** — SAM 은 Builder 플랜(45,000 쌤)인데
-   SPUM Base 권한은 별개다. Studio UI 안에서 AI 를 쓰려면 Creator Pro 권한이 필요하다.
-   이 리포의 프록시 + bake CLI 는 SAM 을 직접 호출하므로 이 제약과 무관하다.
+- **Studio 를 코드가 직접 몬다.** Playwright 로 크롬을 띄워 로그인 세션을 쓴다.
+  맵 주입·에셋 회수·**AI 이미지 생성**까지 전부 코드에서 된다 (8~10절).
+- **AI 조감도 → 맵** 파이프라인이 두 주제에서 재현됐다 (우주선 실내, 중세 여관).
+  `/spum-map` 스킬 한 번이면 창이 뜨고 끝까지 이어진다.
+- 만들어진 맵 3개: `우주선 조감도`(32×32 씬) · `우주선 — 중형 수송선`(40×30 타일+AI 바닥) · `맵 2`.
+
+> 8-18 에 적어둔 *"SPUM 은 free 티어, `canUseAI: false`"* 는 더 이상 맞지 않는다.
+> 8-20 실측에서 `/api/ai-tiles/generate` 가 정상 동작했고(계정 `builder`, `samAvailable: true`),
+> 이미지 생성·슬라이스가 모두 성공했다.
+
+### 막혀 있던 것 (8-18 기준, 이후 재확인 안 함)
+
+- **SAM 생성 호출** — `POST /v1/generate` 가 약 30.7초 뒤 503
+  `Account initialization is temporarily unavailable`. 키·모델·표면을 모두 바꿔도 동일했고
+  `GET /v1/models` 는 항상 200 이었다. **SoonSoon 서버측 문제**로 보였다.
+  8-20 세션에서는 다시 확인하지 않았다 — `pnpm doctor` 로 현재 상태를 본다.
+
+### 알아둘 제약
+
+| | |
+|---|---|
+| 세션 | 서버 세션이 15분쯤에 끊긴다. 스크립트가 `/auth/login` 재방문으로 자동 갱신한다 |
+| 저장소 | localStorage 한도 **약 5MB**. 씬 맵 하나가 ~500KB |
+| 비용 | AI 이미지 생성 회당 **약 125쌤** (씬 맵은 조감도+마스크로 250쌤) |
+| ★ 동시 실행 | **Studio 창을 열어둔 채 스크립트를 돌리지 않는다** — 저장이 어디에도 안 남는다 |
 
 ## 시작
 
@@ -44,6 +62,122 @@ pnpm verify        # 실제 호출로 연결 검증
 `.gitignore` 가 `.env` · `.env.local` · `.env.*.local` 을 막고 `.env.example` 만 통과시킨다
 (`git check-ignore` 로 실증).
 
+## 브라우저 자동화 셋업 (맵 만들기에 필요)
+
+SPUM Studio 는 **httpOnly 쿠키 세션**으로만 인증한다 — API 키로 들어가는 길이 없다.
+그래서 서버를 건드리는 일(AI 이미지 생성·에셋·저장)은 전부 브라우저를 통해야 한다.
+Playwright 로 크롬을 띄워 코드가 직접 몬다.
+
+### 1) 설치 — PC 당 1회
+
+```bash
+npm i                                # playwright 포함
+npx playwright install chromium      # 크롬 바이너리 (~150MB)
+```
+
+이어서 **시스템 라이브러리 33개**가 필요하다 (`libnspr4`, `libnss3`, `libatk*`, X11·폰트 계열).
+없으면 크롬이 `error while loading shared libraries` 로 뜨지 않는다.
+
+```bash
+sudo npx playwright install-deps chromium
+```
+
+`sudo` 비밀번호를 모르거나 막혀 있으면 **WSL 안에서 root 로 바로** 실행할 수 있다
+(비밀번호를 묻지 않는다):
+
+```bash
+/mnt/c/Windows/System32/wsl.exe -d Ubuntu -u root \
+  $(which node) $(pwd)/node_modules/playwright/cli.js install-deps chromium
+```
+
+> WSL2 라면 **WSLg** 가 있어야 창이 화면에 뜬다. `echo $DISPLAY` 가 `:0` 이면 준비된 것이다.
+> 없어도 headless 로는 돌지만, 작업 과정을 지켜볼 수는 없다.
+
+### 2) 로그인 — PC 당 1회
+
+```bash
+npm run studio-login
+```
+
+창이 뜨면 **사람이 직접 로그인한다.** SSO 가 이메일 매직링크라 자동화할 수 없다.
+로그인 후 세션은 `.browser/` 에 저장되고, 이후 스크립트가 **알아서 갱신**한다
+(서버 세션은 15분쯤에 끊기지만 `/auth/login` 재방문으로 자동 복구된다).
+
+`.browser/` 에는 로그인 쿠키가 들어간다 — **git 에 올리지 않는다** (`.gitignore` 에 있음).
+
+### 3) ★ 창을 열어둔 채 작업하지 않는다
+
+`npm run studio-open` 으로 띄운 창을 **열어둔 채** 다른 스크립트를 돌리면,
+같은 프로필을 두 크롬이 잡아 *"기존 브라우저 세션에서 여는 중입니다"* 가 되고
+**그 세션이 쓴 내용은 어디에도 남지 않는다.** localStorage 소실 · 저장 실패 ·
+쿠키 미보존이 전부 여기서 나온다.
+
+지금은 스크립트가 시작 전에 검사해서 pid 와 함께 중단시키지만, 습관을 들이는 편이 낫다:
+**보고 나면 창을 닫는다.** (`Ctrl+C` 말고 창을 닫아야 세션이 정상 저장된다.)
+
+---
+
+## 맵 만들기 — `/spum-map` 스킬
+
+Claude Code 에서 **"이런 느낌으로 맵 만들어줘"** 라고 하면 발동한다.
+`.claude/skills/spum-map/` 에 들어 있어 이 저장소를 받은 사람은 그대로 쓸 수 있다
+(스킬은 세션 시작 시 로드되므로, 처음 받았다면 Claude Code 를 한 번 재시작한다).
+
+### 무엇을 하나
+
+AI 가 그린 **조감도 한 장**을 32×32 격자로 잘라 1024칸을 각각 고유 타일로 등록한다.
+타일을 반복해 까는 방식과 달리 완성된 일러스트가 그대로 맵이 된다.
+
+```
+① 씬 조감도 생성 (AI)          ④ 통행 판정 · 고립 구역 잇기
+② 참조본 512² 축소             ⑤ Studio 주입
+③ 통행 마스크 생성 (img2img)   ⑥ 새로고침 · 확인 스크린샷
+```
+
+**창 하나가 뜬 채로 여섯 단계가 이어져서, 작업 과정을 눈으로 지켜볼 수 있다.**
+
+### 진행 방식
+
+스킬은 **먼저 묻는다.** 회당 약 250쌤이 들기 때문에, 그림이 나온 뒤에
+방향이 틀렸다는 걸 알면 비용이 그대로 날아간다.
+
+| 묻는 것 | 예 |
+|---|---|
+| **구역 구성** | "바 카운터 우상 · 벽난로 좌측 · 계단 우하 · 술통 좌하" (3~6개) |
+| **양식 · 시대** | 중세 / 현대 / SF / 판타지 |
+| **분위기 · 조명** | 밤의 촛불 / 밝은 낮 — **밝을수록 마스크가 정확하다** |
+| **녹화 여부** | 남기면 `out/videos/*.webm` 으로 전 과정이 저장된다 |
+
+답을 받으면 **프롬프트 초안을 보여주고** 실행한다.
+
+### 직접 실행하려면
+
+```bash
+npm run scene-map -- --name "중세 여관 1층" \
+  --prompt-file bake/prompts/tavern-scene.txt --headed --record
+```
+
+| 옵션 | |
+|---|---|
+| `--headed` | 창을 띄운다 (지켜보려면 필수) |
+| `--record` | 전 과정을 webm 으로 녹화 (창이 닫혀야 파일이 떨어진다) |
+| `--dry-run` | 그림만 만들고 주입하지 않는다 |
+| `--jpeg <품질>` | 시트 압축률 (기본 68). 저장소가 빠듯하면 낮춘다 |
+
+검증된 프롬프트는 `.claude/skills/spum-map/references/프롬프트 예시.md` 에 있다.
+
+### 알아둘 제약
+
+| | |
+|---|---|
+| 비용 | 회당 **약 250쌤** (조감도 + 마스크) |
+| 프롬프트 | **520자 이하.** 507자에서 `504`, 446자에서 성공 (실측) |
+| 저장소 | localStorage 한도 **약 5MB**, 씬 맵 하나가 ~500KB |
+| 마스크 | **눈으로 확인한다.** `out/scene-walkmask.png` 에서 초록=통행 |
+| 사람 | 프롬프트에 넣지 않는다. 캐스트는 Studio 에서 따로 배치 |
+
+---
+
 ## 명령
 
 | 명령 | 하는 일 |
@@ -64,6 +198,20 @@ pnpm verify        # 실제 호출로 연결 검증
 | `pnpm ai-source --spec <스펙>` | Object 에디터 AI 생성용 소스 이미지 + 프롬프트 |
 | `pnpm asset-snippet --backup <백업>` | 테마 타일 이미지를 브라우저에서 받는 스니펫 |
 | `pnpm theme-from-backup --backup <백업>` | 백업의 맵 테마를 코드로 가져오기 |
+
+### 브라우저 자동화 (Studio 를 코드로 몰기)
+
+| 명령 | 하는 일 |
+|---|---|
+| `npm run studio-login` | **창을 띄워 사람이 로그인** (PC 당 1회, 세션은 이후 자동 갱신) |
+| `npm run scene-map -- --name "<이름>" --prompt-file <파일> --headed [--record]` | **AI 조감도 → 맵 한 방** (아래 참조) |
+| `npm run studio-open [-- --section map]` | Studio 창을 띄워 눈으로 확인 (**다 보면 창을 닫을 것**) |
+| `npm run studio-apply -- --map <맵.json> [--dry-run]` | 맵 레코드를 Studio 에 주입 |
+| `npm run studio-assets -- --theme "<테마>"` | 테마의 원본·타일 이미지 내려받기 |
+| `npm run studio-restore [-- --from <백업>]` | 서버(또는 백업 파일) → 로컬 복원 |
+| `npm run studio-probe` / `studio-sections` | 백업 + 전역·DOM·API 정찰 (읽기 전용) |
+| `npm run studio-ai-theme -- …` | AI 타일/씬 생성 단일 단계 (`--generate` 없으면 설정만) |
+| `node scripts/scene-to-map.mjs …` | 조감도+마스크 → 맵 레코드 (오프라인) |
 
 ## 구조
 

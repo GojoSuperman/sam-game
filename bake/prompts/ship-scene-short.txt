@@ -1,0 +1,7 @@
+Top-down orthographic spaceship interior floor plan, one continuous scene, game map art.
+Bridge top center with consoles and a starry viewport. Central vertical corridor down to the engine room.
+Upper left crew bunks, lower left mess hall, upper right medbay, lower right cargo crates.
+Bottom center engine room with a glowing cyan reactor.
+Metal deck plating, dark ribbed bulkheads, yellow warning stripes.
+Clean detailed illustration, soft shadows, cool industrial palette.
+No text, no people, no UI. Square, aligned to a 32x32 grid.

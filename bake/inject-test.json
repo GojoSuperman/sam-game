@@ -1,0 +1,36 @@
+{
+  "slug": "inject-test",
+  "name": "주입 시험 맵",
+  "description": "브라우저 자동화 주입 왕복을 확인하려고 만든 작은 시험 맵. 방 2개와 잇는 문 하나.",
+  "width": 20,
+  "height": 15,
+  "tileSize": 32,
+  "tiles": {
+    "ground": ["grass", "grass:1", "grass:2", "flowers"],
+    "floor": "dirt",
+    "wall": "stone_wall"
+  },
+  "groundWalkable": false,
+  "rooms": [
+    {
+      "id": "west",
+      "name": "서쪽 방",
+      "description": "주입 시험용 왼쪽 방.",
+      "rect": [1, 1, 9, 8],
+      "floor": "dirt",
+      "tags": ["room"],
+      "color": "#6b4f2a",
+      "doors": [{ "side": "east", "at": 4, "width": 2 }]
+    },
+    {
+      "id": "east",
+      "name": "동쪽 방",
+      "description": "주입 시험용 오른쪽 방.",
+      "rect": [9, 1, 10, 8],
+      "floor": "dirt",
+      "tags": ["room"],
+      "color": "#4f6b2a",
+      "doors": [{ "side": "south", "at": 5, "width": 2 }]
+    }
+  ]
+}

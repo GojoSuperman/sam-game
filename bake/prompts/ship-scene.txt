@@ -1,0 +1,13 @@
+Top-down orthographic floor plan illustration of a mid-size spaceship interior. One single continuous scene, video game map art, viewed straight from above.
+Layout, filling the whole square:
+- Bridge at top center: control consoles, pilot seats, a wide forward viewport showing stars.
+- A central vertical corridor running from the bridge down to the engine room.
+- Upper left: crew quarters with bunks and lockers.
+- Lower left: mess hall with tables, chairs and hydroponic planters.
+- Upper right: medbay with beds and monitor screens.
+- Lower right: cargo bay with stacked crates and containers.
+- Bottom center: engine room with a glowing cyan reactor core and pipe runs.
+Materials: brushed metal deck plating, dark bulkhead walls with ribs, yellow warning stripes at thresholds, recessed floor lighting.
+Style: detailed clean illustration, crisp readable shapes, soft ambient shadows, cool industrial palette with cyan accents.
+No text, no labels, no letters, no numbers, no people, no characters, no UI overlay.
+Square image aligned to a 32x32 tile grid, walls and rooms snapped to grid lines.

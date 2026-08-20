@@ -1,0 +1,7 @@
+Top-down orthographic medieval tavern ground floor, one continuous scene, game map art.
+Bar counter with stools top right, kitchen hearth behind it.
+Large stone fireplace on the left wall with benches.
+Main hall of wooden tables, chairs and long benches.
+Staircase to the upper floor bottom right, barrel storage bottom left.
+Warm wooden plank floor, stone walls, rugs, hanging lanterns.
+No text, no people, no UI. Square, aligned to a 32x32 grid.

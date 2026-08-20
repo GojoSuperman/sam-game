@@ -10,20 +10,40 @@
  * ★ 그림은 프로토타입이다. 파이프라인(생성 → 불러오기 → Studio 표시)을
  *   검증하려고 만든 것이고, 진짜 타일이 생기면 시트만 갈아끼운다.
  *
- * 사용: node scripts/make-tileset.mjs
- * 결과: out/themes/proto-interior.json · out/themes/proto-interior.png
+ * 사용: node scripts/make-tileset.mjs [--set interior|ship]
+ * 결과: out/themes/<세트>.json · out/themes/<세트>.png
  */
 import { writeFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { Canvas, toDataUrl } from '../src/png.mjs';
 import { buildInteriorTiles } from '../src/tile-art.mjs';
+import { buildShipTiles } from '../src/tile-art-ship.mjs';
+
+/** 타일 세트 정의 — 새 세트를 추가하려면 여기에 한 줄 */
+const SETS = {
+  interior: {
+    build: buildInteriorTiles, key: 'indoor', slug: 'proto-interior',
+    assetId: 'theme_proto_interior', themeId: 'proto_interior', label: '프로토 실내',
+    note: '코드로 그린 프로토타입 타일. 진짜 타일이 생기면 시트만 교체한다.',
+  },
+  ship: {
+    build: buildShipTiles, key: 'ship', slug: 'ship-interior',
+    assetId: 'theme_ship_interior', themeId: 'ship_interior', label: '우주선 실내',
+    note: '코드로 그린 우주선 실내 타일 — 갑판·격벽·설비. 기하학적이라 절차적 생성이 잘 맞는다.',
+  },
+};
+
+const args = process.argv.slice(2);
+const setName = (() => { const i = args.indexOf('--set'); return i > -1 ? args[i + 1] : 'interior'; })();
+const SET = SETS[setName];
+if (!SET) { console.error(`알 수 없는 세트: ${setName}. 가능: ${Object.keys(SETS).join(', ')}`); process.exit(1); }
 
 const TILE = 32;
 const COLUMNS = 5;
-const ASSET_ID = 'theme_proto_interior';
+const ASSET_ID = SET.assetId;
 const TILE_ID_BASE = 2049; // 1 + TILESET_ID_STRIDE — 두 번째 타일셋의 첫 id
 
-const tiles = buildInteriorTiles();
+const tiles = SET.build();
 const rows = Math.ceil(tiles.length / COLUMNS);
 
 const sheet = new Canvas(COLUMNS * TILE, rows * TILE);
@@ -39,8 +59,8 @@ tiles.forEach((tile, index) => {
   const id = TILE_ID_BASE + index;
   const blocked = tile.movement === 'blocked';
   tileProperties[String(id)] = {
-    smoThemeId: 'proto_interior',
-    smoThemeName: '프로토 실내',
+    smoThemeId: SET.themeId,
+    smoThemeName: SET.label,
     smoTileId: String(index + 1),
     name: tile.name,
     category: tile.category,
@@ -58,12 +78,12 @@ tiles.forEach((tile, index) => {
 
 const asset = {
   id: ASSET_ID,
-  name: '프로토 실내',
+  name: SET.label,
   kind: 'custom',
   imageUrl: toDataUrl(png),
   source: 'map-theme',
-  themeId: 'proto_interior',
-  themeName: '프로토 실내',
+  themeId: SET.themeId,
+  themeName: SET.label,
   tileProperties,
   tileIdBase: TILE_ID_BASE,
   tileWidth: TILE,
@@ -72,14 +92,14 @@ const asset = {
   updatedAt: new Date().toISOString(),
 };
 
-const jsonPath = resolve('out/themes/proto-interior.json');
-const pngPath = resolve('out/themes/proto-interior.png');
+const jsonPath = resolve(`out/themes/${SET.slug}.json`);
+const pngPath = resolve(`out/themes/${SET.slug}.png`);
 await mkdir(dirname(jsonPath), { recursive: true });
 await writeFile(pngPath, png);
 await writeFile(jsonPath, JSON.stringify({
-  key: 'indoor',
+  key: SET.key,
   generatedAt: new Date().toISOString(),
-  note: '코드로 그린 프로토타입 타일. 진짜 타일이 생기면 시트만 교체한다.',
+  note: SET.note,
   aliases,
   asset,
 }, null, 2), 'utf8');

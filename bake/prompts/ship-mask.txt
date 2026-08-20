@@ -1,0 +1,5 @@
+Convert the reference floor plan into a flat two-tone navigation mask, same layout and same grid alignment.
+Pure WHITE for every walkable floor tile the crew can stand on.
+Pure BLACK for everything blocked: walls, bulkheads, consoles, machinery, beds, tables, chairs, crates, planters, the reactor, pipes.
+Hard edges, no anti-aliasing, no grey, no gradients, no shadows, no text, no icons.
+Keep the exact same shapes and positions as the reference. Square image on a 32x32 grid.

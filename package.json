@@ -27,9 +27,22 @@
     "models": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/list-models.mjs",
     "check-tiers": "node scripts/check-tiers.mjs",
     "check-assets": "node scripts/check-assets.mjs",
-    "fixtures": "node scripts/make-fixture-assets.mjs"
+    "fixtures": "node scripts/make-fixture-assets.mjs",
+    "studio-login": "node scripts/studio-login.mjs",
+    "studio-probe": "node scripts/studio-probe.mjs",
+    "studio-sections": "node scripts/studio-probe-sections.mjs",
+    "studio-assets": "node scripts/studio-assets.mjs",
+    "studio-apply": "node scripts/studio-apply.mjs",
+    "studio-open": "node scripts/studio-open.mjs",
+    "studio-ai-theme": "node scripts/studio-ai-theme.mjs",
+    "studio-restore": "node scripts/studio-restore.mjs",
+    "scene-to-map": "node scripts/scene-to-map.mjs",
+    "scene-map": "node scripts/make-scene-map.mjs"
   },
   "dependencies": {
     "jpeg-js": "^0.4.4"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
   }
 }

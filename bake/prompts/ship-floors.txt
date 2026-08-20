@@ -1,0 +1,10 @@
+Top-down spaceship interior floor material chart, four quadrants.
+Top-left: brushed steel deck plating, cool neutral grey.
+Top-right: dark industrial floor grating, charcoal with faint linear ribs.
+Bottom-left: clean pale ceramic bridge flooring, light warm grey.
+Bottom-right: scuffed cargo bay metal, muted brown-grey.
+Every quadrant is a PLAIN FLAT MATERIAL FIELD filling its area edge to edge.
+No borders, no frames, no objects, no machinery, no pipes, no shadows, no gradients, no vignetting.
+Only a very subtle material grain, almost uniform.
+Keep the four quadrants as separate uniform fields with a hard edge between them.
+Do not draw a scene. This is a material swatch chart.

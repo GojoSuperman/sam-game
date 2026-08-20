@@ -1,0 +1,635 @@
+{
+  "slug": "starship",
+  "name": "우주선 — 중형 수송선",
+  "description": "중앙 복도를 축으로 함교·승무원실·식당·의무실·화물칸·기관실을 배치한 중형 수송선. 바닥은 SPUM Studio 에서 AI 로 생성한 사실적 재질(리벳 갑판·통풍 격자·세라믹·화물칸 강판), 벽과 설비는 코드로 그린 타일이다. 두 테마를 2048 간격 id 대역으로 함께 물린다.",
+  "width": 40,
+  "height": 30,
+  "tileSize": 32,
+  "tiles": {
+    "ground": "ship.hull",
+    "floor": "shipai.deck",
+    "wall": "ship.hull"
+  },
+  "groundWalkable": false,
+  "rooms": [
+    {
+      "id": "bridge",
+      "name": "함교",
+      "description": "선수. 조타 콘솔과 전망창.",
+      "rect": [
+        12,
+        1,
+        16,
+        6
+      ],
+      "floor": [
+        "shipai.bridge_floor",
+        "shipai.bridge_floor:1",
+        "shipai.bridge_floor:2",
+        "shipai.bridge_floor:3"
+      ],
+      "tags": [
+        "room",
+        "bridge"
+      ],
+      "color": "#4a6b8a",
+      "doors": [
+        {
+          "side": "south",
+          "at": 19,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "corridor",
+      "name": "중앙 복도",
+      "description": "선수에서 선미까지 관통하는 주 통로.",
+      "rect": [
+        17,
+        6,
+        5,
+        17
+      ],
+      "floor": [
+        "shipai.deck",
+        "shipai.deck:1",
+        "shipai.deck:2",
+        "shipai.deck:3"
+      ],
+      "tags": [
+        "corridor"
+      ],
+      "color": "#3a4450",
+      "doors": []
+    },
+    {
+      "id": "quarters",
+      "name": "승무원실",
+      "description": "좌현. 침상과 사물함.",
+      "rect": [
+        2,
+        8,
+        16,
+        7
+      ],
+      "floor": [
+        "shipai.deck",
+        "shipai.deck:2",
+        "shipai.deck:1"
+      ],
+      "tags": [
+        "room",
+        "quarters"
+      ],
+      "color": "#5a5a7a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 11,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "mess",
+      "name": "식당",
+      "description": "좌현 후방. 식탁과 수경 재배대.",
+      "rect": [
+        2,
+        14,
+        16,
+        7
+      ],
+      "floor": [
+        "shipai.deck:1",
+        "shipai.deck:3",
+        "shipai.deck"
+      ],
+      "tags": [
+        "room",
+        "mess"
+      ],
+      "color": "#6a7a5a",
+      "doors": [
+        {
+          "side": "east",
+          "at": 17,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "medbay",
+      "name": "의무실",
+      "description": "우현. 병상과 진단 단말.",
+      "rect": [
+        21,
+        8,
+        16,
+        7
+      ],
+      "floor": [
+        "shipai.bridge_floor",
+        "shipai.bridge_floor:2",
+        "shipai.bridge_floor:1"
+      ],
+      "tags": [
+        "room",
+        "medbay"
+      ],
+      "color": "#7a8a9a",
+      "doors": [
+        {
+          "side": "west",
+          "at": 11,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "cargo",
+      "name": "화물칸",
+      "description": "우현 후방. 적재 화물.",
+      "rect": [
+        21,
+        14,
+        16,
+        7
+      ],
+      "floor": [
+        "shipai.cargo_floor",
+        "shipai.cargo_floor:1",
+        "shipai.cargo_floor:2",
+        "shipai.cargo_floor:3"
+      ],
+      "tags": [
+        "room",
+        "cargo"
+      ],
+      "color": "#8a7a4a",
+      "doors": [
+        {
+          "side": "west",
+          "at": 17,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "name": "기관실",
+      "description": "선미. 반응로와 배관.",
+      "rect": [
+        12,
+        22,
+        16,
+        7
+      ],
+      "floor": [
+        "shipai.grate",
+        "shipai.deck:2",
+        "shipai.grate:1",
+        "shipai.grate:2"
+      ],
+      "tags": [
+        "room",
+        "engine"
+      ],
+      "color": "#8a4a4a",
+      "doors": [
+        {
+          "side": "north",
+          "at": 19,
+          "width": 2
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "tile": "ship.viewport",
+      "at": [
+        [
+          14,
+          1
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          16,
+          1
+        ],
+        [
+          17,
+          1
+        ],
+        [
+          18,
+          1
+        ],
+        [
+          19,
+          1
+        ],
+        [
+          20,
+          1
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          22,
+          1
+        ],
+        [
+          23,
+          1
+        ],
+        [
+          24,
+          1
+        ],
+        [
+          25,
+          1
+        ]
+      ]
+    },
+    {
+      "tile": "ship.console",
+      "at": [
+        [
+          14,
+          2
+        ],
+        [
+          16,
+          2
+        ],
+        [
+          18,
+          2
+        ],
+        [
+          21,
+          2
+        ],
+        [
+          23,
+          2
+        ],
+        [
+          25,
+          2
+        ]
+      ]
+    },
+    {
+      "tile": "ship.seat",
+      "at": [
+        [
+          16,
+          4
+        ],
+        [
+          19,
+          4
+        ],
+        [
+          22,
+          4
+        ]
+      ]
+    },
+    {
+      "tile": "ship.floor_light",
+      "at": [
+        [
+          19,
+          8
+        ],
+        [
+          19,
+          12
+        ],
+        [
+          19,
+          16
+        ],
+        [
+          19,
+          20
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "ship.warn_stripe",
+      "at": [
+        [
+          18,
+          21
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          20,
+          21
+        ]
+      ],
+      "blocking": false
+    },
+    {
+      "tile": "ship.bunk",
+      "at": [
+        [
+          4,
+          10
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          7,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          13,
+          13
+        ]
+      ]
+    },
+    {
+      "tile": "ship.locker",
+      "at": [
+        [
+          3,
+          9
+        ],
+        [
+          16,
+          9
+        ]
+      ]
+    },
+    {
+      "tile": "ship.mess_table",
+      "at": [
+        [
+          6,
+          16
+        ],
+        [
+          10,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "ship.seat",
+      "at": [
+        [
+          5,
+          16
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          9,
+          16
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          10,
+          15
+        ]
+      ]
+    },
+    {
+      "tile": "ship.hydro",
+      "at": [
+        [
+          14,
+          16
+        ],
+        [
+          14,
+          19
+        ],
+        [
+          3,
+          19
+        ]
+      ]
+    },
+    {
+      "tile": "ship.bunk",
+      "at": [
+        [
+          24,
+          10
+        ],
+        [
+          27,
+          10
+        ],
+        [
+          30,
+          10
+        ],
+        [
+          33,
+          10
+        ]
+      ]
+    },
+    {
+      "tile": "ship.terminal",
+      "at": [
+        [
+          23,
+          9
+        ],
+        [
+          26,
+          9
+        ],
+        [
+          29,
+          9
+        ],
+        [
+          32,
+          9
+        ],
+        [
+          35,
+          9
+        ]
+      ]
+    },
+    {
+      "tile": "ship.seat",
+      "at": [
+        [
+          24,
+          13
+        ],
+        [
+          27,
+          13
+        ]
+      ]
+    },
+    {
+      "tile": "ship.crate",
+      "at": [
+        [
+          24,
+          15
+        ],
+        [
+          26,
+          15
+        ],
+        [
+          28,
+          15
+        ],
+        [
+          30,
+          15
+        ],
+        [
+          24,
+          19
+        ],
+        [
+          26,
+          19
+        ],
+        [
+          33,
+          15
+        ]
+      ]
+    },
+    {
+      "tile": "ship.crate_stack",
+      "at": [
+        [
+          28,
+          19
+        ],
+        [
+          30,
+          19
+        ],
+        [
+          33,
+          19
+        ],
+        [
+          35,
+          16
+        ]
+      ]
+    },
+    {
+      "tile": "ship.reactor",
+      "at": [
+        [
+          19,
+          25
+        ],
+        [
+          20,
+          25
+        ],
+        [
+          19,
+          26
+        ],
+        [
+          20,
+          26
+        ]
+      ]
+    },
+    {
+      "tile": "ship.pipe",
+      "at": [
+        [
+          14,
+          24
+        ],
+        [
+          14,
+          26
+        ],
+        [
+          24,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          16,
+          23
+        ],
+        [
+          23,
+          23
+        ]
+      ]
+    },
+    {
+      "tile": "ship.console",
+      "at": [
+        [
+          17,
+          27
+        ],
+        [
+          22,
+          27
+        ]
+      ]
+    }
+  ]
+}
