@@ -97,7 +97,18 @@ npm run scene-map -- --name "<맵 이름>" --prompt-file <프롬프트 파일> -
 ## 5. 전제 조건
 
 - `npm i && npx playwright install chromium` + 시스템 라이브러리(`install-deps`)
-- `npm run studio-login` 으로 **한 번 로그인** (SSO 는 이메일 매직링크라 사람이 해야 한다)
+- `npm run studio-login` 으로 **한 번 로그인** (SSO 는 이메일 매직링크라 사람이 해야 한다).
+  로그인 프로필은 홈 공용(`~/.spum-studio`)이라 **프로젝트마다 다시 하지 않아도 된다.**
 - 세션은 이후 자동 갱신된다
+- 다른 브라우저나 다른 프로젝트에서 Studio 를 만졌다면 시작 전에 **`npm run studio-pull`** —
+  동기화가 append-only 라 낡은 로컬로 열면 그게 최신 리비전이 된다
+  (`docs/Studio 를 두 곳에서 쓰기.md`)
 
-세부 실측과 함정은 `docs/Studio와 Claude Code 역할 분담.md` 8~10절에 있다.
+새 프로젝트에 이 킷을 깔려면:
+
+```bash
+git clone --depth 1 https://github.com/GojoSuperman/sam-game.git /tmp/spum-kit \
+  && bash /tmp/spum-kit/scripts/spum-kit-install.sh
+```
+
+세부 실측과 함정은 원본 저장소의 `docs/Studio와 Claude Code 역할 분담.md` 8~10절에 있다.

@@ -20,6 +20,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { withStudio, enterStudio, STUDIO_ORIGIN } from '../src/studio-browser.mjs';
 import { createBackup } from '../src/studio-backup.mjs';
 import { decodePng, Canvas } from '../src/png.mjs';
@@ -57,6 +58,9 @@ Pure BLACK for everything blocked: walls, furniture, beds, tables, chairs, count
 water, rivers, canals, ponds, fountains, pits.
 Hard edges, no anti-aliasing, no grey, no gradients, no text, no icons.
 Keep the same shapes and positions. Square image on a 32x32 grid.`;
+
+// 하위 스크립트는 **이 파일 기준**으로 찾는다. cwd 기준이면 다른 프로젝트 폴더에서 돌릴 때 깨진다.
+const SCENE_TO_MAP = path.join(path.dirname(fileURLToPath(import.meta.url)), 'scene-to-map.mjs');
 
 const safe = (s) => s.replace(/[^\w가-힣-]+/g, '_');
 const step = (n, msg) => console.log(`\n[${n}/6] ${msg}`);
@@ -122,7 +126,7 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   step(4, '마스크로 통행 판정 · 고립 구역 잇기 · 맵 레코드 생성');
   const outJson = path.join('out', `scene-map-${safe(mapName)}.json`);
   const res = execFileSync(process.execPath, [
-    'scripts/scene-to-map.mjs', '--image', scenePath, '--maskimage', maskPath,
+    SCENE_TO_MAP, '--image', scenePath, '--maskimage', maskPath,
     '--name', mapName, '--jpeg', String(jpegQ), '--connect', '--mask', '--out', outJson,
   ], { encoding: 'utf8' });
   process.stdout.write(res.split('\n').map((l) => (l ? '  ' + l : l)).join('\n'));

@@ -13,11 +13,31 @@ import { chromium } from 'playwright';
 import { execSync } from 'node:child_process';
 import path from 'node:path';
 import fs from 'node:fs';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-export const PROFILE_DIR = path.join(ROOT, '.browser', 'profile');
+/**
+ * 프로필(=로그인 세션 + localStorage)을 어디에 둘 것인가.
+ *
+ * ★ 홈의 공용 위치가 기본이다 (2026-08-20). 프로젝트마다 프로필을 따로 두면
+ *   ① SPUM 프로젝트를 새로 팔 때마다 매직링크 재로그인을 해야 하고,
+ *   ② localStorage 가 여러 벌이 되어 **나중에 여는 쪽이 낡은 상태를 최신 리비전으로
+ *      올려버린다** (동기화가 append-only 라서. docs/Studio 를 두 곳에서 쓰기.md 참고).
+ *   공용으로 두면 로그인 한 번, 로컬 한 벌이다. 산출물(out/)은 실행한 프로젝트에 남는다.
+ *
+ * 우선순위: SPUM_STUDIO_HOME 환경변수 > 이 저장소의 옛 .browser/ (있으면) > ~/.spum-studio
+ */
+function resolveStudioHome() {
+  if (process.env.SPUM_STUDIO_HOME) return path.resolve(process.env.SPUM_STUDIO_HOME);
+  const legacy = path.join(ROOT, '.browser');
+  if (fs.existsSync(path.join(legacy, 'profile'))) return legacy;   // 기존 설치를 깨지 않는다
+  return path.join(os.homedir(), '.spum-studio');
+}
+
+export const STUDIO_HOME = resolveStudioHome();
+export const PROFILE_DIR = path.join(STUDIO_HOME, 'profile');
 /**
  * 쿠키 이중 백업.
  *
@@ -27,7 +47,7 @@ export const PROFILE_DIR = path.join(ROOT, '.browser', 'profile');
  * SSO 는 이메일 매직링크라 재로그인에 사람 손이 필요하므로, 세션 유실 비용이 크다.
  * 그래서 쿠키를 프로필 밖에 한 벌 더 둔다.
  */
-export const SESSION_FILE = path.join(ROOT, '.browser', 'session.json');
+export const SESSION_FILE = path.join(STUDIO_HOME, 'session.json');
 export const STUDIO_ORIGIN = 'https://spum.soonsoon.ai';
 export const STUDIO_URL = `${STUDIO_ORIGIN}/studio/`;
 
