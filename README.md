@@ -35,18 +35,18 @@ SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
 
 | | |
 |---|---|
-| 세션 | 서버 세션이 15분쯤에 끊긴다. 스크립트가 `/auth/login` 재방문으로 자동 갱신한다 |
+| 세션 | 서버가 로그인 후 약 30분에 세션을 끊는다 (15분에 쿠키 회전 1회 → 30분 종료, 2026-08-21 계측). 작업은 로그인 직후 몰아서 한다 |
 | 저장소 | localStorage 한도 **약 5MB**. 씬 맵 하나가 ~500KB |
 | 비용 | AI 이미지 생성 회당 **약 125쌤** (씬 맵은 조감도+마스크로 250쌤) |
 | ★ 동시 실행 | **Studio 창을 열어둔 채 스크립트를 돌리지 않는다** — 저장이 어디에도 안 남는다 |
 
 ## 다른 프로젝트에서 이 킷 쓰기
 
-맵 파이프라인만 떼어 새 폴더에 심을 수 있다. 새 폴더에서:
+맵 파이프라인은 이제 **별도 공개 저장소 [spum-kit](https://github.com/GojoSuperman/spum-kit)** 에서 관리한다. 새 폴더에서:
 
 ```bash
-git clone --depth 1 https://github.com/GojoSuperman/sam-game.git /tmp/spum-kit \
-  && bash /tmp/spum-kit/scripts/spum-kit-install.sh
+git clone --depth 1 https://github.com/GojoSuperman/spum-kit.git /tmp/spum-kit \
+  && bash /tmp/spum-kit/install.sh
 ```
 
 스킬(`.claude/skills/spum-map/`) · 파이프라인 9개 파일 · npm scripts · `.gitignore` 가 놓이고
