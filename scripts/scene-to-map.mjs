@@ -238,8 +238,11 @@ const record = {
     layer('back_1', 'tile', ground),
     layer('back_2', 'tile', new Array(cols * rows).fill(0)),
     layer('front_1', 'tile', new Array(cols * rows).fill(0)),
-    layer('walkable', 'nav', Array.from(walkable)),
-    layer('obstacle', 'nav', Array.from(walkable).map((v) => (v ? 0 : 1))),
+    // ★ type 은 'nav' 가 아니라 스키마의 'walkable'/'obstacle' 이어야 한다 (2026-08-20 실측).
+    //   'nav' 는 월드 런타임의 walkable 토큰 목록에 들어 있어서, obstacle 레이어까지
+    //   walkable 로 분류돼 전 칸 통행이 된다 (WorldCastSync.inferLayerType).
+    layer('walkable', 'walkable', Array.from(walkable)),
+    layer('obstacle', 'obstacle', Array.from(walkable).map((v) => (v ? 0 : 1))),
   ],
   tilesets: [{
     tileSetAssetId: 'theme_ship_scene',
