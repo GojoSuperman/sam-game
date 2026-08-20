@@ -39,6 +39,44 @@ SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
 | 비용 | AI 이미지 생성 회당 **약 125쌤** (씬 맵은 조감도+마스크로 250쌤) |
 | ★ 동시 실행 | **Studio 창을 열어둔 채 스크립트를 돌리지 않는다** — 저장이 어디에도 안 남는다 |
 
+## 다른 프로젝트에서 이 킷 쓰기
+
+맵 파이프라인만 떼어 새 폴더에 심을 수 있다. 새 폴더에서:
+
+```bash
+git clone --depth 1 https://github.com/GojoSuperman/sam-game.git /tmp/spum-kit \
+  && bash /tmp/spum-kit/scripts/spum-kit-install.sh
+```
+
+스킬(`.claude/skills/spum-map/`) · 파이프라인 9개 파일 · npm scripts · `.gitignore` 가 놓이고
+의존성까지 깔린다. 그 폴더에서 `claude` 를 띄우고 **"맵 만들어줘"** 라고 하면 된다.
+
+### 키는 어떻게 넣나
+
+**맵 만들기에는 API 키가 필요 없다.** 인증은 브라우저 SSO 세션이고, 킷의 9개 파일이 읽는
+환경변수는 `SPUM_STUDIO_HOME` 하나뿐이다 (프로필 위치를 옮기고 싶을 때만).
+
+```bash
+npm run studio-login      # 창이 뜨면 이메일 매직링크를 누른다 — 계정당 한 번
+```
+
+로그인 프로필은 **홈 공용 `~/.spum-studio/`** 에 저장된다. 그래서 프로젝트를 새로 파도
+다시 로그인하지 않는다. 생성 비용(쌤)은 그 계정에서 빠진다.
+
+> **주의**: 계정당 세션은 하나다. 평소 브라우저로 Studio 에 로그인하면 자동화 세션이 죽는다.
+> 두 곳을 오갈 때의 절차는 [docs/Studio 를 두 곳에서 쓰기.md](docs/Studio%20%EB%A5%BC%20%EB%91%90%20%EA%B3%B3%EC%97%90%EC%84%9C%20%EC%93%B0%EA%B8%B0.md) 에 있다.
+
+**SAM API 키가 필요한 것은 게임 프록시 쪽**(`npm run game`, `server/sam-proxy.mjs`)이다.
+[sam.soonsoon.ai/api-keys](https://sam.soonsoon.ai/api-keys) 에서 발급해 로컬에만 둔다:
+
+```bash
+cp .env.example .env.local     # SAM_API_KEY= 에 값을 넣는다
+```
+
+`.env` · `.env.local` 은 `.gitignore` 에 있고 **저장소에 키가 들어간 적은 없다**
+(공개 전환 시 히스토리 전수 검사 완료). 발급 시 월 쌤 한도를 지정하면 이 프로젝트 비용만
+따로 볼 수 있다. 실수로 키를 커밋했다면 세탁보다 **폐기 후 재발급**이 먼저다.
+
 ## 시작
 
 ```bash
