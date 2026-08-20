@@ -12,6 +12,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { decodePng, Canvas, toDataUrl } from '../src/png.mjs';
+import { autoConnect } from '../src/auto-connect.mjs';
 import jpeg from 'jpeg-js';
 
 const args = process.argv.slice(2);
@@ -59,22 +60,28 @@ if (maskImage) {
   // ★ AI 가 img2img 로 만든 흑백 마스크로 판정한다.
   //   씬 픽셀만 보고 추정하면 바닥(밝기 77~110)과 설비(53~82)가 겹쳐 구분이 안 된다
   //   (2026-08-20 실측: 그 방식은 통행 0칸이 나왔다). 마스크는 흑백이라 명확하다.
+  // ★ 판정은 "평균 밝기" 가 아니라 **흰 픽셀 비율**로 (2026-08-21 실측).
+  //   평균>127 은 사실상 "흰색 50% 이상" 이라, 길 가장자리 칸(흰 30~50%)이 전부
+  //   막힘으로 떨어져 통로가 1칸으로 좁아졌다 — 성주의 거처에서 89칸이 여기 걸렸고
+  //   사용자가 "길 같은데 못 간다" 고 관측했다. 35% 이상이면 발 디딜 바닥이 있다고 본다.
+  const walkFrac = Number(arg('--walk-frac', 0.35));
   const m = decodePng(await readFile(maskImage));
   const sx = m.width / src.width, sy = m.height / src.height;
   for (let cy = 0; cy < rows; cy += 1) {
     for (let cx = 0; cx < cols; cx += 1) {
-      let sum = 0, n = 0;
+      let white = 0, n = 0;
       for (let y = 4; y < cell - 4; y += 1) {           // 격자선을 피해 안쪽만 본다
         for (let x = 4; x < cell - 4; x += 1) {
           const i = (Math.floor((cy * cell + y) * sy) * m.width + Math.floor((cx * cell + x) * sx)) * 4;
-          sum += 0.299 * m.data[i] + 0.587 * m.data[i + 1] + 0.114 * m.data[i + 2];
+          const lum = 0.299 * m.data[i] + 0.587 * m.data[i + 1] + 0.114 * m.data[i + 2];
+          if (lum > 127) white += 1;
           n += 1;
         }
       }
-      walkable[cy * cols + cx] = (sum / n) > 127 ? 1 : 0;
+      walkable[cy * cols + cx] = (white / n) >= walkFrac ? 1 : 0;
     }
   }
-  console.log(`[scene-to-map] 마스크로 판정: ${maskImage}`);
+  console.log(`[scene-to-map] 마스크로 판정: ${maskImage} (흰 픽셀 ${Math.round(walkFrac * 100)}% 이상 = 통행)`);
 } else {
   for (let y = 0; y < rows; y += 1) {
     for (let x = 0; x < cols; x += 1) {
@@ -88,63 +95,63 @@ console.log(`[scene-to-map] 통행 ${walkCount}칸 / 막힘 ${cols * rows - walk
 
 // ── 고립 구역 잇기 ──
 // 마스크가 문턱까지 막아 방이 통째로 갈라지는 일이 잦다 (2026-08-20: 5구역으로 분리,
-// 침실 67칸·화물칸 101칸이 고립). 막힌 칸을 **최소 개수만** 뚫어 메인에 붙인다.
-function groupsOf(w) {
-  const seen = new Uint8Array(w.length), out = [];
-  for (let i = 0; i < w.length; i += 1) {
-    if (!w[i] || seen[i]) continue;
-    const st = [i], g = []; seen[i] = 1;
-    while (st.length) {
-      const c = st.pop(); g.push(c);
-      const cx = c % cols, cy = (c / cols) | 0;
-      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-        const nx = cx + dx, ny = cy + dy;
-        if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
-        const ni = ny * cols + nx;
-        if (w[ni] && !seen[ni]) { seen[ni] = 1; st.push(ni); }
-      }
-    }
-    out.push(g);
-  }
-  return out.sort((a, b) => b.length - a.length);
-}
+// 침실 67칸·화물칸 101칸이 고립). autoConnect 가 밝은 칸을 골라 뚫는다.
+const doorSet = new Set();     // 뚫은 문 자리 (확인 이미지에 노랑으로 표시)
+const sealedSet = new Set();   // 잇지 않고 막은 고립 조각 (주황으로 표시)
 
 if (doConnect) {
-  let opened = 0;
-  for (let round = 0; round < 12; round += 1) {
-    const gs = groupsOf(walkable);
-    if (gs.length <= 1) break;
-    const main = new Set(gs[0]);
-    const island = gs[1];
+  // ★ 어디를 뚫을지는 그림 판이 알려준다 (autoConnect, 2026-08-21 정책 전환).
+  //   예전 0-1 BFS 는 "가장 적게 뚫는 곳"만 골라서 멀쩡한 담 한복판에 보이지 않는
+  //   구멍을 냈다 — AI 는 벽을 통과해 다니고, 조이스틱 사용자는 마당에 갇혔다.
+  //   실제 대문·빈 틈은 바닥이 보여 밝으므로, 어두운 칸일수록 비싸게 매겨
+  //   밝은 칸(진짜 개구부일 곳)을 골라 뚫는다. minRegion 미만 조각(장식 안쪽 등)은
+  //   잇지 않고 아래 "가장 큰 덩어리만 남기기"에서 막힘으로 떨어진다.
+  const bright = new Array(cols * rows);
+  for (let cy = 0; cy < rows; cy += 1) for (let cx = 0; cx < cols; cx += 1) {
+    bright[cy * cols + cx] = cellStats(cx, cy).mean / 255;
+  }
+  const roles = Array.from(walkable, (v) => (v ? 'floor' : 'wall'));
+  // minRegion 3: 계단이 마스크에서 잘게 끊겨도 잇는다 (밝기 실측상 계단 0.24~0.54,
+  // 담 0.29~0.40 으로 겹쳐서 밝기 문턱으로는 계단과 담을 가를 수 없다 — 대신 아래에서
+  // 뚫은 칸의 타일 그림을 바닥으로 갈아 끼워 "보이는 개구부"로 만든다).
+  const res = autoConnect(cols, rows, roles, bright, {
+    minRegion: Number(arg('--min-region', 3)),
+    minBrightness: Number(arg('--min-brightness', 0)),
+  });
+  const carved = res.openings.filter((o) => !o.skipped);
+  for (const o of carved) { walkable[o.at] = 1; doorSet.add(o.at); }
+  if (carved.length) {
+    console.log(`[scene-to-map] 고립 구역을 잇느라 ${carved.length}칸을 뚫었습니다 (밝은 칸 우선):`);
+    for (const o of carved) console.log(`  (${o.col},${o.row}) 밝기 ${o.brightness}`);
+  }
+  for (const o of res.openings.filter((o) => o.skipped)) {
+    console.log(`[scene-to-map] ${o.size}칸 구역은 ${o.need}칸을 뚫어야 해 잇지 않고 막습니다`);
+  }
+}
 
-    // 0-1 BFS: 통행 칸으로 가는 건 비용 0, 막힌 칸을 뚫는 건 비용 1.
-    // 같은 거리는 현재 큐에, 한 칸 더 뚫어야 하면 다음 큐에 넣는다.
-    const INF = 1e9;
-    const dist = new Int32Array(cols * rows).fill(INF);
-    const prev = new Int32Array(cols * rows).fill(-1);
-    let cur = [], next = [];
-    for (const i of island) { dist[i] = 0; cur.push(i); }
-    let d = 0, target = -1;
-    while (cur.length || next.length) {
-      if (!cur.length) { cur = next; next = []; d += 1; }
-      const c = cur.pop();
-      if (c === undefined || dist[c] !== d) continue;
-      if (main.has(c)) { target = c; break; }
-      const cx = c % cols, cy = (c / cols) | 0;
-      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-        const nx = cx + dx, ny = cy + dy;
-        if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
-        const ni = ny * cols + nx;
-        const w = walkable[ni] ? 0 : 1;
-        if (d + w < dist[ni]) { dist[ni] = d + w; prev[ni] = c; (w === 0 ? cur : next).push(ni); }
-      }
+// ── 뚫은 문을 눈에 보이게 ──
+// 통행 데이터만 뚫으면 그림은 담 그대로라, AI 는 벽을 통과해 다니고 조이스틱
+// 사용자는 문을 못 찾는다 (2026-08-21 사용자 관측). 타일 시트는 우리가 만들므로
+// 뚫은 칸의 픽셀을 이웃 바닥 타일로 갈아 끼워 개구부가 실제로 보이게 한다.
+if (doorSet.size) {
+  for (const at of doorSet) {
+    const gx = at % cols, gy = (at / cols) | 0;
+    let donor = -1;
+    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
+      const nx = gx + dx, ny = gy + dy;
+      if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
+      const ni = ny * cols + nx;
+      if (walkable[ni] && !doorSet.has(ni)) { donor = ni; break; }
     }
-    if (target < 0) break;
-    for (let c = target; c !== -1; c = prev[c]) {
-      if (!walkable[c]) { walkable[c] = 1; opened += 1; }
+    if (donor < 0) continue;
+    const sx = (donor % cols) * cell, sy = ((donor / cols) | 0) * cell;
+    for (let y = 0; y < cell; y += 1) for (let x = 0; x < cell; x += 1) {
+      const to = ((gy * cell + y) * src.width + (gx * cell + x)) * 4;
+      const from = ((sy + y) * src.width + (sx + x)) * 4;
+      for (let k = 0; k < 4; k += 1) src.data[to + k] = src.data[from + k];
     }
   }
-  if (opened) console.log(`[scene-to-map] 고립 구역을 잇느라 ${opened}칸을 뚫었습니다`);
+  console.log(`[scene-to-map] 뚫은 ${doorSet.size}칸의 타일을 이웃 바닥 그림으로 바꿨습니다 (개구부가 보이게)`);
 }
 
 // ── 연결성: 가장 큰 통행 덩어리만 남긴다 (섬처럼 떨어진 칸은 못 간다) ──
@@ -169,7 +176,7 @@ for (let i = 0; i < walkable.length; i += 1) {
 const keep = new Set(best);
 let trimmed = 0;
 for (let i = 0; i < walkable.length; i += 1) {
-  if (walkable[i] && !keep.has(i)) { walkable[i] = 0; trimmed += 1; }
+  if (walkable[i] && !keep.has(i)) { walkable[i] = 0; sealedSet.add(i); trimmed += 1; }
 }
 console.log(`[scene-to-map] 최대 연결 구역 ${bestSize}칸 · 떨어진 ${trimmed}칸은 막음`);
 
@@ -181,17 +188,23 @@ if (wantMask) {
       const i = (y * src.width + x) * 4;
       const ci = ((y / cell) | 0) * cols + ((x / cell) | 0);
       const w = walkable[ci];
+      // 노랑 = 뚫은 문 · 주황 = 잇지 않고 막은 고립 조각 · 초록/빨강 = 통행/막힘
+      const tint = doorSet.has(ci) ? [255, 220, 0]
+        : sealedSet.has(ci) ? [255, 140, 0]
+          : w ? [0, 200, 90] : [120, 0, 0];
       m.set(x, y, [
-        Math.round(src.data[i] * 0.55 + (w ? 0 : 120) * 0.45),
-        Math.round(src.data[i + 1] * 0.55 + (w ? 200 : 0) * 0.45),
-        Math.round(src.data[i + 2] * 0.55 + (w ? 90 : 0) * 0.45),
+        Math.round(src.data[i] * 0.55 + tint[0] * 0.45),
+        Math.round(src.data[i + 1] * 0.55 + tint[1] * 0.45),
+        Math.round(src.data[i + 2] * 0.55 + tint[2] * 0.45),
         255,
       ]);
     }
   }
   await mkdir('out', { recursive: true });
   await writeFile('out/scene-walkmask.png', m.toPng());
-  console.log('[scene-to-map] 판정 확인용: out/scene-walkmask.png (초록=통행, 빨강=막힘)');
+  const safeName = mapName.replace(/[^\w가-힣-]+/g, '_');
+  await writeFile(`out/scene-walkmask-${safeName}.png`, m.toPng());
+  console.log(`[scene-to-map] 판정 확인용: out/scene-walkmask-${safeName}.png (초록=통행, 빨강=막힘, 노랑=뚫은 문, 주황=막은 고립 조각)`);
 }
 
 // ── 타일 속성: 칸마다 하나씩 ──

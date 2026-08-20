@@ -89,6 +89,10 @@ class Heap {
 export function autoConnect(width, height, roles, brightness, opts = {}) {
   const minRegion = opts.minRegion ?? 12;   // 이보다 작은 조각은 무시 (가구 틈새 등)
   const maxCells = opts.maxCells ?? 5;      // 한 번에 이만큼 넘게 뚫어야 하면 포기
+  // 이보다 어두운 칸은 아예 뚫지 못한다 (0 = 제한 없음). 계단·길처럼 밝은 조각은
+  // 밝은 칸으로 이어지고, 어두운 담으로 둘러싸인 마당은 못 이어져 고립으로 남는다 —
+  // 그런 곳에 보이지 않는 구멍을 내면 캐릭터가 벽을 통과해 다닌다 (2026-08-21 실측).
+  const minBrightness = opts.minBrightness ?? 0;
   const openAs = opts.openAs ?? 'door';
   const next = [...roles];
   const openings = [];
@@ -117,6 +121,7 @@ export function autoConnect(width, height, roles, brightness, opts = {}) {
         const at = nr * width + nc;
         // 통행 칸은 공짜, 막힌 칸은 1 + 어두움 벌점 (밝으면 실제 문일 가능성이 높다)
         const b = brightness ? (brightness[at] ?? 0.5) : 0.5;
+        if (!roleWalks(next[at]) && b < minBrightness) continue;   // 너무 어두우면 못 뚫는다
         const step = roleWalks(next[at]) ? 0 : 1 + (1 - b) * 4;
         const nd = d + step;
         if (nd < dist[at]) { dist[at] = nd; from[at] = cur; heap.push(nd, at); }
