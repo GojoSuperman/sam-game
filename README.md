@@ -45,7 +45,7 @@ SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
 맵 파이프라인은 이제 **별도 공개 저장소 [spum-kit](https://github.com/GojoSuperman/spum-kit)** 에서 관리한다. 새 폴더에서:
 
 ```bash
-git clone --depth 1 https://github.com/GojoSuperman/spum-kit.git /tmp/spum-kit \
+rm -rf /tmp/spum-kit && git clone --depth 1 https://github.com/GojoSuperman/spum-kit.git /tmp/spum-kit \
   && bash /tmp/spum-kit/install.sh
 ```
 
