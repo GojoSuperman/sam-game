@@ -607,8 +607,14 @@ Keep the exact same shapes and positions as the reference. Square image on a 32x
 > **2026-08-20 보강 — 물이 빠져 있었다.** 실내 맵만 만들다가 야외(판타지 시장 광장)를 처음
 > 만들자 드러났다. 막을 것 목록에 물이 없어서 **파란 물 타일 88칸 중 73칸이 통행 가능**으로
 > 잡혔다 — 캐릭터가 수로 위를 걸어 건널 수 있는 상태였다. 목록에
-> `stalls, water, rivers, canals, ponds, fountains, pits` 을 추가했다 (494자).
+> `stalls, water, rivers, canals, ponds, fountains, pits` 을 추가했다.
 > 이미 만든 맵에는 소급되지 않는다 — 마스크를 다시 뽑아야 반영된다 (약 125쌤).
+>
+> **효과 확인 (작은 정원, 수정 후 첫 맵)**: 물 55칸 중 통행 **1칸(2%)**. 이전 맵은 88칸 중 73칸(83%)이었다.
+>
+> **같은 맵에서 반대 문제도 드러났다** — 잔디 101칸 중 통행이 **1칸**뿐이라 정원인데 길만 걸을 수
+> 있었다. 마스크가 잔디를 수풀로 본 것이다. 걸을 것 쪽에 `grass, lawns, dirt, rugs` 를 명시하고
+> 막을 것의 `plants` 를 `bushes, potted plants` 로 좁혔다. 최종 514자.
 
 ### 10-2. SOURCE 업로드 (img2img 의 입구)
 

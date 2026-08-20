@@ -17,7 +17,8 @@ SPUM 월드 위에 SAM API 로 게임을 만들기 위한 셋업.
   맵 주입·에셋 회수·**AI 이미지 생성**까지 전부 코드에서 된다 (8~10절).
 - **AI 조감도 → 맵** 파이프라인이 두 주제에서 재현됐다 (우주선 실내, 중세 여관).
   `/spum-map` 스킬 한 번이면 창이 뜨고 끝까지 이어진다.
-- 만들어진 맵 3개: `우주선 조감도`(32×32 씬) · `우주선 — 중형 수송선`(40×30 타일+AI 바닥) · `맵 2`.
+- 만들어진 씬 맵 6개: `작은 정원` · `판타지 시장 광장` · `다다미 집` · `성주의 거처` ·
+  `중세 여관 1층` · `우주선 조감도` (전부 32×32, 계정 서버에 보존).
 
 > 8-18 에 적어둔 *"SPUM 은 free 티어, `canUseAI: false`"* 는 더 이상 맞지 않는다.
 > 8-20 실측에서 `/api/ai-tiles/generate` 가 정상 동작했고(계정 `builder`, `samAvailable: true`),
@@ -138,10 +139,15 @@ npm run studio-login
 ```
 
 창이 뜨면 **사람이 직접 로그인한다.** SSO 가 이메일 매직링크라 자동화할 수 없다.
-로그인 후 세션은 `.browser/` 에 저장되고, 이후 스크립트가 **알아서 갱신**한다
-(서버 세션은 15분쯤에 끊기지만 `/auth/login` 재방문으로 자동 복구된다).
+로그인 후 세션은 **`~/.spum-studio/`** 에 저장되고, 이후 스크립트가 알아서 갱신한다.
 
-`.browser/` 에는 로그인 쿠키가 들어간다 — **git 에 올리지 않는다** (`.gitignore` 에 있음).
+프로필이 홈에 있어서 **SPUM 프로젝트를 새로 만들어도 다시 로그인하지 않는다.**
+localStorage 도 한 벌이라 프로젝트 사이에서 상태가 어긋나지 않는다.
+위치를 바꾸려면 `SPUM_STUDIO_HOME` 환경변수를 쓴다.
+
+> **계정당 세션은 하나다.** 평소 브라우저로 Studio 에 로그인하면 자동화 세션이 죽어
+> (`/api/me` 가 `{"user":null}`) 매직링크 재로그인이 필요하다. 두 곳을 오갈 때의 절차는
+> [docs/Studio 를 두 곳에서 쓰기.md](docs/Studio%20%EB%A5%BC%20%EB%91%90%20%EA%B3%B3%EC%97%90%EC%84%9C%20%EC%93%B0%EA%B8%B0.md) 참고.
 
 ### 3) ★ 창을 열어둔 채 작업하지 않는다
 
@@ -152,6 +158,18 @@ npm run studio-login
 
 지금은 스크립트가 시작 전에 검사해서 pid 와 함께 중단시키지만, 습관을 들이는 편이 낫다:
 **보고 나면 창을 닫는다.** (`Ctrl+C` 말고 창을 닫아야 세션이 정상 저장된다.)
+
+### 4) 다른 곳에서 Studio 를 만졌다면 — `npm run studio-pull`
+
+Studio 동기화는 **append-only** 다. 부팅할 때 로컬과 서버가 다르면 서버를 읽어오는 게 아니라
+**로컬을 새 리비전으로 얹는다.** 그래서 낡은 로컬로 열면 낡은 상태가 최신이 된다.
+
+```bash
+npm run studio-pull -- --list      # 서버 리비전 목록 (▶ 가 활성)
+npm run studio-pull                # 활성 리비전을 로컬에 반영하고 시작
+```
+
+잃어버린 것 같아도 히스토리에 남아 있다 — `--revision <번호>` 로 되돌린다.
 
 ---
 
@@ -191,16 +209,23 @@ AI 가 그린 **조감도 한 장**을 32×32 격자로 잘라 1024칸을 각각
 ### 직접 실행하려면
 
 ```bash
-npm run scene-map -- --name "중세 여관 1층" \
-  --prompt-file bake/prompts/tavern-scene.txt --headed --record
+npm run scene-map -- --name "작은 정원" \
+  --prompt-file prompts/garden.txt --headed --quality medium
 ```
 
 | 옵션 | |
 |---|---|
 | `--headed` | 창을 띄운다 (지켜보려면 필수) |
+| `--quality low\|medium\|high` | 생성 품질. 기본 high 지만 **medium 을 권한다** — 아래 참고 |
+| `--model <모델>` | `gpt-image-2`(기본) · `gpt-image` · `FLUX.2-pro` |
+| `--keep-open` | 끝나도 창을 닫지 않고 사람이 닫을 때까지 기다린다 |
 | `--record` | 전 과정을 webm 으로 녹화 (창이 닫혀야 파일이 떨어진다) |
 | `--dry-run` | 그림만 만들고 주입하지 않는다 |
 | `--jpeg <품질>` | 시트 압축률 (기본 68). 저장소가 빠듯하면 낮춘다 |
+
+**`--quality medium` 을 권하는 이유** (실측): high 는 생성이 60~70초로 길어져 앞단 nginx
+타임아웃(`504`)에 걸린다 — 같은 프롬프트가 high 로 **두 번 연속 504**(249쌤 증발) 났고,
+medium 으로 낮추자 **28~39초에 통과**했다 (이후 5회 연속 성공). 자세한 근거는 문서 10-3 절.
 
 검증된 프롬프트는 `.claude/skills/spum-map/references/프롬프트 예시.md` 에 있다.
 
@@ -213,6 +238,7 @@ npm run scene-map -- --name "중세 여관 1층" \
 | 저장소 | localStorage 한도 **약 5MB**, 씬 맵 하나가 ~500KB |
 | 마스크 | **눈으로 확인한다.** `out/scene-walkmask.png` 에서 초록=통행 |
 | 사람 | 프롬프트에 넣지 않는다. 캐스트는 Studio 에서 따로 배치 |
+| 야외 맵 | 물·잔디 판정을 특히 확인한다. 마스크 프롬프트에 물은 막고 잔디는 걷게 명시해 뒀지만, 매번 결과를 본다 |
 
 ---
 
@@ -242,7 +268,8 @@ npm run scene-map -- --name "중세 여관 1층" \
 | 명령 | 하는 일 |
 |---|---|
 | `npm run studio-login` | **창을 띄워 사람이 로그인** (PC 당 1회, 세션은 이후 자동 갱신) |
-| `npm run scene-map -- --name "<이름>" --prompt-file <파일> --headed [--record]` | **AI 조감도 → 맵 한 방** (아래 참조) |
+| `npm run scene-map -- --name "<이름>" --prompt-file <파일> --headed --quality medium` | **AI 조감도 → 맵 한 방** (아래 참조) |
+| `npm run studio-pull [-- --list\|--revision <n>]` | **서버 리비전 → 로컬.** 다른 곳에서 Studio 를 만졌다면 작업 전에 |
 | `npm run studio-open [-- --section map]` | Studio 창을 띄워 눈으로 확인 (**다 보면 창을 닫을 것**) |
 | `npm run studio-apply -- --map <맵.json> [--dry-run]` | 맵 레코드를 Studio 에 주입 |
 | `npm run studio-assets -- --theme "<테마>"` | 테마의 원본·타일 이미지 내려받기 |

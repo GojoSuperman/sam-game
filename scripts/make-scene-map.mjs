@@ -52,10 +52,10 @@ if (!mapName || (!promptFile && !promptText)) {
   process.exit(1);
 }
 
-const MASK_PROMPT = `Convert the reference floor plan into a flat two-tone navigation mask, same layout and same grid alignment.
-Pure WHITE for every walkable floor tile a person can stand on.
-Pure BLACK for everything blocked: walls, furniture, beds, tables, chairs, counters, crates, barrels, stairs, plants, fireplaces, stalls,
-water, rivers, canals, ponds, fountains, pits.
+const MASK_PROMPT = `Convert the reference into a flat two-tone navigation mask, same layout and grid alignment.
+Pure WHITE for ground a person can walk on: floors, paths, grass, lawns, dirt, rugs.
+Pure BLACK for everything blocked: walls, furniture, beds, tables, chairs, counters, crates, barrels, stairs, bushes, potted plants,
+fireplaces, stalls, water, rivers, canals, ponds, fountains, pits.
 Hard edges, no anti-aliasing, no grey, no gradients, no text, no icons.
 Keep the same shapes and positions. Square image on a 32x32 grid.`;
 
