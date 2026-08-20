@@ -24,6 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { withStudio, enterStudio, STUDIO_ORIGIN } from '../src/studio-browser.mjs';
 import { createBackup } from '../src/studio-backup.mjs';
 import { decodePng, Canvas } from '../src/png.mjs';
+import { encodeJpeg } from '../src/image-io.mjs';
 import { attachImageCapture, createAndOpenTheme, setupTheme, applySource, generate } from '../src/studio-scene.mjs';
 
 const args = process.argv.slice(2);
@@ -45,19 +46,23 @@ const jpegQ = arg('--jpeg', '68');
 // 서버가 밀릴 땐 medium/low 로 낮춰 통과시키는 게 낫다 (2026-08-20 실측: 504 두 번, 249쌤 소모).
 const quality = arg('--quality', 'high');
 const model = arg('--model', 'gpt-image-2');
+// 이미 뽑아둔 씬으로 마스크부터 재개한다 (씬 생성 과금을 건너뛴다).
+// 마스크가 413/504 로 죽었을 때 "씬은 남아 있으니 마스크만 다시" 하는 경로.
+const sceneFile = arg('--scene');
 const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 
-if (!mapName || (!promptFile && !promptText)) {
-  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>") [--headed] [--record] [--dry-run] [--quality low|medium|high] [--model gpt-image-2|gpt-image|FLUX.2-pro] [--keep-open]');
+if (!mapName || (!promptFile && !promptText && !sceneFile)) {
+  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>" | --scene <씬 PNG>) [--headed] [--record] [--dry-run] [--quality low|medium|high] [--model gpt-image-2|gpt-image|FLUX.2-pro] [--keep-open]');
   process.exit(1);
 }
 
+// 2026-08-21: 성주의 거처에서 붉은 카펫 대로가 검게 칠해져 카펫을 명시 강조.
+// "Keep the same shapes and positions" 는 첫 줄의 same layout 과 중복이라 뺐다 (520자 관리).
 const MASK_PROMPT = `Convert the reference into a flat two-tone navigation mask, same layout and grid alignment.
-Pure WHITE for ground a person can walk on: floors, paths, grass, lawns, dirt, rugs.
+Pure WHITE for ground a person can walk on: floors, paths, grass, lawns, dirt, rugs, carpets and red carpet runners.
 Pure BLACK for everything blocked: walls, furniture, beds, tables, chairs, counters, crates, barrels, stairs, bushes, potted plants,
 fireplaces, stalls, water, rivers, canals, ponds, fountains, pits.
-Hard edges, no anti-aliasing, no grey, no gradients, no text, no icons.
-Keep the same shapes and positions. Square image on a 32x32 grid.`;
+Hard edges, no anti-aliasing, no grey, no gradients, no text, no icons. Square image on a 32x32 grid.`;
 
 // 하위 스크립트는 **이 파일 기준**으로 찾는다. cwd 기준이면 다른 프로젝트 폴더에서 돌릴 때 깨진다.
 const SCENE_TO_MAP = path.join(path.dirname(fileURLToPath(import.meta.url)), 'scene-to-map.mjs');
@@ -65,8 +70,12 @@ const SCENE_TO_MAP = path.join(path.dirname(fileURLToPath(import.meta.url)), 'sc
 const safe = (s) => s.replace(/[^\w가-힣-]+/g, '_');
 const step = (n, msg) => console.log(`\n[${n}/6] ${msg}`);
 
-/** 1024² → 512² (참조 이미지가 크면 413 이 난다) */
-async function halve(srcPath, outPath) {
+/** 1024² → 512² (참조 이미지가 크면 413 이 난다).
+ *  업로드가 base64(×4/3)라 앞단 한도 1MiB 기준 파일 약 780KB 가 상한이다 —
+ *  실측: 773KB 통과, 815KB 에서 0.4초 만에 413 (2026-08-21 산동네 마을).
+ *  PNG 가 한도를 넘으면 JPEG 로 재인코딩한다 (참조용이라 무손실일 필요가 없다). */
+const REF_LIMIT = 740 * 1024;
+async function halve(srcPath, outBase) {
   const src = decodePng(await readFile(srcPath));
   const S = 2, w = src.width / S, h = src.height / S;
   const c = new Canvas(w, h);
@@ -79,12 +88,24 @@ async function halve(srcPath, outPath) {
     const n = S * S;
     c.set(x, y, [Math.round(r / n), Math.round(g / n), Math.round(b / n), 255]);
   }
-  const buf = c.toPng();
-  await writeFile(outPath, buf);
-  return Math.round(buf.length / 1024);
+  const png = c.toPng();
+  if (png.length <= REF_LIMIT) {
+    const outPath = `${outBase}.png`;
+    await writeFile(outPath, png);
+    return { path: outPath, kb: Math.round(png.length / 1024) };
+  }
+  for (const q of [88, 80, 70]) {
+    const jpg = await encodeJpeg(w, h, c.data, q);
+    if (jpg.length <= REF_LIMIT || q === 70) {
+      const outPath = `${outBase}.jpg`;
+      await writeFile(outPath, jpg);
+      console.log(`  PNG ${Math.round(png.length / 1024)}KB > 한도 ${Math.round(REF_LIMIT / 1024)}KB → JPEG q${q}`);
+      return { path: outPath, kb: Math.round(jpg.length / 1024) };
+    }
+  }
 }
 
-const text = promptText || (await readFile(promptFile, 'utf8')).trim();
+const text = promptText || (promptFile ? (await readFile(promptFile, 'utf8')).trim() : '');
 console.log(`맵 "${mapName}" · 프롬프트 ${text.length}자 · ${model}/${quality}${text.length > 520 ? '  ⚠ 520자를 넘으면 504 가 나기 쉽습니다' : ''}`);
 
 await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } : {}) }, async (ctx) => {
@@ -99,18 +120,25 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   await writeFile(path.join('out', 'backups', `studio-${stamp}.json`), JSON.stringify(createBackup(ls, 'object'), null, 2), 'utf8');
 
   // ── ① 씬 ──────────────────────────────────────────────
-  step(1, `씬 조감도 생성 — "${mapName}"`);
-  let ed = await createAndOpenTheme(page);
-  await setupTheme(page, ed, { name: mapName, promptText: text, tags: `scene, 32x32, ${mapName}`, quality, model });
-  const scenePath = path.join('out', 'assets-studio', `${safe(mapName)}__scene-${stamp}.png`);
-  if (!(await generate(page, ed, capture, scenePath))) {
-    throw new Error('씬 생성 실패 — 504 이거나 응답에 이미지가 없습니다. 프롬프트를 줄여 다시 시도하세요.');
+  let ed, scenePath;
+  if (sceneFile) {
+    step(1, `씬 재사용 — ${sceneFile} (생성 과금 없음)`);
+    scenePath = sceneFile;
+  } else {
+    step(1, `씬 조감도 생성 — "${mapName}"`);
+    ed = await createAndOpenTheme(page);
+    await setupTheme(page, ed, { name: mapName, promptText: text, tags: `scene, 32x32, ${mapName}`, quality, model });
+    scenePath = path.join('out', 'assets-studio', `${safe(mapName)}__scene-${stamp}.png`);
+    if (!(await generate(page, ed, capture, scenePath))) {
+      throw new Error('씬 생성 실패 — 504 이거나 응답에 이미지가 없습니다. 프롬프트를 줄여 다시 시도하세요.');
+    }
   }
 
   // ── ② 참조본 ──────────────────────────────────────────
   step(2, '참조본 512² 로 축소 (1024² 를 그대로 올리면 413)');
-  const refPath = path.join('out', 'assets-studio', `${safe(mapName)}__ref512-${stamp}.png`);
-  console.log(`  ${await halve(scenePath, refPath)}KB → ${refPath}`);
+  const ref = await halve(scenePath, path.join('out', 'assets-studio', `${safe(mapName)}__ref512-${stamp}`));
+  const refPath = ref.path;
+  console.log(`  ${ref.kb}KB → ${refPath}`);
 
   // ── ③ 마스크 ──────────────────────────────────────────
   step(3, '통행 마스크 생성 (img2img — 구조를 유지시킨다)');
