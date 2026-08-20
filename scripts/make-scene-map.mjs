@@ -14,7 +14,8 @@
  *   node scripts/make-scene-map.mjs --name "..." --prompt-text "..." --headed
  *   ... --quality medium   생성 품질 (low|medium|high, 기본 high). 504 가 잦으면 낮춘다
  *   ... --model FLUX.2-pro 모델 (gpt-image-2|gpt-image|FLUX.2-pro, 기본 gpt-image-2)
- *   ... --dry-run   그림만 만들고 주입은 하지 않는다
+ *   ... --dry-run     그림만 만들고 주입은 하지 않는다
+ *   ... --keep-open   끝나도 창을 닫지 않고 사람이 닫을 때까지 기다린다
  */
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
@@ -34,6 +35,9 @@ const promptText = arg('--prompt-text');
 const headed = has('--headed');
 const record = has('--record');
 const dryRun = has('--dry-run');
+// 끝난 뒤 창을 닫지 않고 사람이 닫을 때까지 기다린다 (결과를 눈으로 둘러볼 때).
+// ★ 창이 떠 있는 동안에는 같은 프로필을 쓰는 다른 스크립트가 돌지 못한다.
+const keepOpen = has('--keep-open');
 const jpegQ = arg('--jpeg', '68');
 // 생성 품질·모델. UI 기본은 quality=low 인데 파이프라인은 high 를 써 왔다.
 // high 는 생성이 길어져 앞단 nginx 타임아웃(504)에 걸릴 확률이 오른다 —
@@ -43,15 +47,16 @@ const model = arg('--model', 'gpt-image-2');
 const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 
 if (!mapName || (!promptFile && !promptText)) {
-  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>") [--headed] [--record] [--dry-run] [--quality low|medium|high] [--model gpt-image-2|gpt-image|FLUX.2-pro]');
+  console.error('사용법: node scripts/make-scene-map.mjs --name "<맵 이름>" (--prompt-file <파일> | --prompt-text "<문장>") [--headed] [--record] [--dry-run] [--quality low|medium|high] [--model gpt-image-2|gpt-image|FLUX.2-pro] [--keep-open]');
   process.exit(1);
 }
 
 const MASK_PROMPT = `Convert the reference floor plan into a flat two-tone navigation mask, same layout and same grid alignment.
 Pure WHITE for every walkable floor tile a person can stand on.
-Pure BLACK for everything blocked: walls, furniture, machinery, beds, tables, chairs, counters, crates, barrels, stairs, plants, fireplaces.
-Hard edges, no anti-aliasing, no grey, no gradients, no shadows, no text, no icons.
-Keep the exact same shapes and positions as the reference. Square image on a 32x32 grid.`;
+Pure BLACK for everything blocked: walls, furniture, beds, tables, chairs, counters, crates, barrels, stairs, plants, fireplaces, stalls,
+water, rivers, canals, ponds, fountains, pits.
+Hard edges, no anti-aliasing, no grey, no gradients, no text, no icons.
+Keep the same shapes and positions. Square image on a 32x32 grid.`;
 
 const safe = (s) => s.replace(/[^\w가-힣-]+/g, '_');
 const step = (n, msg) => console.log(`\n[${n}/6] ${msg}`);
@@ -122,7 +127,19 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   ], { encoding: 'utf8' });
   process.stdout.write(res.split('\n').map((l) => (l ? '  ' + l : l)).join('\n'));
 
-  if (dryRun) { console.log('\n--dry-run: 주입하지 않았습니다.'); return; }
+  /** --keep-open 이면 사람이 창을 닫을 때까지 기다린다 */
+  const waitForClose = async () => {
+    if (!keepOpen) return;
+    console.log('\n  --keep-open: 창을 열어둡니다. 다 보시면 **창을 닫으세요**.');
+    console.log('  (창을 닫아야 세션 쿠키와 녹화 파일이 저장되고, 다음 스크립트가 프로필을 쓸 수 있습니다)');
+    await new Promise((resolve) => {
+      ctx.on('close', resolve);
+      page.on('close', () => setTimeout(resolve, 500));
+    });
+    console.log('  창이 닫혔습니다.');
+  };
+
+  if (dryRun) { console.log('\n--dry-run: 주입하지 않았습니다.'); await waitForClose(); return; }
 
   // ── ⑥ 주입 ────────────────────────────────────────────
   step(5, 'Studio 에 주입');
@@ -154,4 +171,5 @@ await withStudio({ headless: !headed, ...(record ? { recordDir: 'out/videos' } :
   await page.screenshot({ path: shot });
   console.log(`  스크린샷: ${shot}`);
   console.log(`\n완료 — "${mapName}"`);
+  await waitForClose();
 });

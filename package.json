@@ -36,6 +36,7 @@
     "studio-open": "node scripts/studio-open.mjs",
     "studio-ai-theme": "node scripts/studio-ai-theme.mjs",
     "studio-restore": "node scripts/studio-restore.mjs",
+    "studio-pull": "node scripts/studio-pull.mjs",
     "scene-to-map": "node scripts/scene-to-map.mjs",
     "scene-map": "node scripts/make-scene-map.mjs"
   },
